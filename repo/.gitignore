@@ -2,3 +2,5 @@ venv/Include
 venv/Lib
 venv/Scripts
 venv/pyvenv.cfg
+venv/carclub/backend/__pycache__
+venv/carclub/backend/migrations
