@@ -1,24 +1,4 @@
-<!-- homepage/templates/homepage/home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temporary homepage</title>
-</head>
-<main>
-    <h1>Temp homepage lol</h1>
-</main>
-<body>
-    <header>
-        <nav>
-            <ul>
-
-                <li><a href="/">Home</a></li>
-                <li><a href="/login/">Login</a></li>
-                <li><a href="/register/">Register</a></li>
-            </ul>
-        </nav>
-    </header>
-</body>
-</html>
+{% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
+{% block content %}
+<p>This is the home page</p>
+{% endblock %}

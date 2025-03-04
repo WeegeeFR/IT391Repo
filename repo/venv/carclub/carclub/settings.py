@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'carclub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +117,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+
+
+# My comments below: this is to serve non-dynamic content like: css, javascript, images
+STATIC_URL = 'static/' # The URL path where static files will be served.
+STATICFILES_DIRS = [BASE_DIR / "static"] # Additional directories where Django will look for static files.
+# My comment: In production, Django collects all static files into a single folder using static_root.
+STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
