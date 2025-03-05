@@ -1,8 +1,6 @@
-* {
+body {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navbar {
@@ -31,3 +29,21 @@
     background: #f8f9fa;
     transform: scale(1.05);
 }
+
+/* Further appereance for forms below */
+form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+form input:focus {
+    box-shadow: 0 0 5px rgba(3, 119, 244, 0.5);
+}
+
+.btn-primary {
+    border: none;
+}
+
+/* Further appereance for forms above */
