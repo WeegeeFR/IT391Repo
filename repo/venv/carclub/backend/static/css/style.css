@@ -5,58 +5,29 @@
     font-family: sans-serif;
 }
 
-html,
-body {
-    height: 100%;
-    width: 100%;
-}
-
 .navbar {
-    background-color: #007bff;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.nav-links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 20px;
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.3rem;
 }
 
-.nav-links li a {
-    color: white;
-    text-decoration: none;
-    padding: 8px 12px;
+.nav-link {
+    transition: color 0.3s ease;
 }
 
-.hamburger {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
+.nav-link:hover {
+    color: #fff !important;
 }
 
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: #007bff;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        padding: 10px 0;
-        text-align: center;
-    }
+.nav-item .btn {
+    border-radius: 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
 
-    .nav-links.show {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
+.nav-item .btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.05);
 }
