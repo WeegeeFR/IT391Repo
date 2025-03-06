@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block tittle %}Register Page{% endblock %}
 {% block content %}
 <!-- Registration Form -->
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow-lg p-4 border-0 rounded-4" style="width: 350px;">
         <div class="text-center">
             <i class="fas fa-user-plus fa-4x text-primary"></i>
@@ -28,21 +28,4 @@
         </div>
     </div>
 </div>
-
-<!-- <h2>Create a new account</h2>
-
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form> -->
-
 {% endblock %}

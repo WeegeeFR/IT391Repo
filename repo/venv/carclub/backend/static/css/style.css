@@ -1,23 +1,36 @@
-body {
+* {
+    padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* Nav bar appearance */
 .navbar {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #212A31;
+}
+
+.nav-container {
+    margin: 0 20px;
 }
 
 .navbar-brand {
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .nav-link {
-    transition: color 0.3s ease;
+    font-size: 1.1em;
+    color: white;
+    transition: color 0.2s ease;
 }
 
 .nav-link:hover {
-    color: #fff !important;
+    color: orange;
 }
 
 .nav-item .btn {
@@ -31,6 +44,11 @@ body {
 }
 
 /* Further appereance for forms below */
+form {
+    margin-top: 150px;
+
+}
+
 form input {
     padding: 10px;
     border-radius: 8px;
