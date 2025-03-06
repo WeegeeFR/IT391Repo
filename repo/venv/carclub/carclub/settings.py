@@ -76,9 +76,17 @@ WSGI_APPLICATION = 'carclub.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    },
+    'mysql': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'it391-testdb',
+        'USER': 'phpmyadmin',
+        'PASSWORD': 'ab12cd34',
+        'HOST': '10.111.21.97',  # or use the appropriate host (e.g., an IP address or domain)
+        'PORT': '3306',  # default MySQL port
     }
 }
 

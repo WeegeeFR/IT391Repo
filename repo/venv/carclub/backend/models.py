@@ -53,7 +53,6 @@ class Car(models.Model):
     car_id = models.IntegerField(primary_key=True)
     car_owner = models.CharField(max_length=100, null=False)
     car_codriven = models.BooleanField(default=False)
-    date_driven = models.BooleanField(default=False)
     #car info
     car_name = models.CharField(max_length=100)
     car_brand = models.CharField(max_length=100)
@@ -75,9 +74,17 @@ class Car(models.Model):
 
 #tire model for database
 class Tire(models.Model):
+    #identifier info
     tire_id = models.IntegerField(primary_key=True, null=False)
     date_driven =  models.DateField()
-    tire_pressure = models.FloatField()
     tire_picture = models.ImageField(upload_to='default_picture', null=True, blank=True)
 
+    #information about tire
+    tire_pressure = models.FloatField(null=True)
+    tread_wear = models.CharField(max_length=255, null=True)
+    highway_miles = models.IntegerField(null=True)
+
+    #manufacturer info
+    manufacturer_link = models.CharField(max_length=500, null=True)
+    manufacture_date = models.DateField(null=True)
     
