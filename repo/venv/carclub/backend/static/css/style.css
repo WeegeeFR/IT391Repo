@@ -1,62 +1,67 @@
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
 }
 
-html,
 body {
-    height: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Nav bar appearance */
+.navbar {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #212A31;
+}
+
+.nav-container {
+    margin: 0 20px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.nav-link {
+    font-size: 1.1em;
+    color: white;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: orange;
+}
+
+.nav-item .btn {
+    border-radius: 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-item .btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.05);
+}
+
+/* Further appereance for forms below */
+form {
+    margin-top: 150px;
+
+}
+
+form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
     width: 100%;
 }
 
-.navbar {
-    background-color: #007bff;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
+form input:focus {
+    box-shadow: 0 0 5px rgba(3, 119, 244, 0.5);
 }
 
-.nav-links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 20px;
+.btn-primary {
+    border: none;
 }
 
-.nav-links li a {
-    color: white;
-    text-decoration: none;
-    padding: 8px 12px;
-}
-
-.hamburger {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: #007bff;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        padding: 10px 0;
-        text-align: center;
-    }
-
-    .nav-links.show {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
-}
+/* Further appereance for forms above */
