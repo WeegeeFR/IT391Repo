@@ -8,15 +8,18 @@ from .models import User
 class LoginForm(AuthenticationForm):
     # username = forms.CharField(label="Username", max_length=25)
     # password = forms.CharField(widget=forms.PasswordInput, label="Password")
-    username = forms.CharField(widget=forms.TextInput(attrs={
+
+
+    username = forms.CharField(label="Username", max_length=25, widget=forms.TextInput(attrs={
         'class': 'form-control', 
         'placeholder': 'Enter your username'
     }))
-    
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={
         'class': 'form-control', 
         'placeholder': 'Enter your password'
     }))
+    
+    
 
 #inherits from the base user creation form, just customizing it here
 class RegisterForm(forms.Form):
