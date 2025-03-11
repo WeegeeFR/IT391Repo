@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os.path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,6 +133,10 @@ STATIC_URL = 'static/' # The URL path where static files will be served.
 STATICFILES_DIRS = [BASE_DIR / "static"] # Additional directories where Django will look for static files.
 # My comment: In production, Django collects all static files into a single folder using static_root.
 STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
+
+#media folder settings for pictures and stuff, setting a default folder for it
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 

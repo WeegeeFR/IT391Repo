@@ -32,12 +32,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home'%}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login'%}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register'%}">Register</a>
-                    </li>
+                    <!--check if user isn't logged in yet to display register/login-->
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login'%}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register'%}">Register</a>
+                        </li>
+                    <!--Check if user is logged in to display profile link-->
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile'%}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

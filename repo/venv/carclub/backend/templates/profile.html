@@ -1,0 +1,40 @@
+<!-- profile.html -->
+{% extends 'base.html' %} {% block tittle %}Profile Page{% endblock %}
+
+{% block content %}
+  {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  <h1>{{ user.username }}'s Profile</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="id_username">Username:</label>
+      {{ form.username }}
+    </div>
+
+    <div>
+      <label for="id_email">Email:</label>
+      {{ form.email }}
+    </div>
+
+    <div>
+      <label for="id_first_name">First Name:</label>
+      {{ form.first_name }}
+    </div>
+
+    <div>
+      <label for="id_last_name">Last Name:</label>
+      {{ form.last_name }}
+    </div>
+    
+    <div>Date Joined: {{ user.date_joined }}</div>
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+{% endblock %}

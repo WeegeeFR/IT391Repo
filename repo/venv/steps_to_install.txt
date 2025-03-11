@@ -1,0 +1,10 @@
+--1: Activate virtual environment(if you need one)
+ -go into repo, do python -m venv venv to create the virtual environment
+ -congrats, you now have a virtual environment, do venv\Scripts\activate to activate into
+
+ --2: Install dependencies
+  -do pip install -r requirements.txt
+  -should install every dependency besides mysqlclient
+  -install mysqlclient by doing "pip install mysqlclient"
+
+--Your good to go! just do python manage.py runserver to run the server for testing

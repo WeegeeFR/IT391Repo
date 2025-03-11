@@ -1,6 +1,13 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
 <main class="container-fluid">
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <h2>This is the home page</h2>
 </main>
 {% endblock %}
