@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib import messages
+from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 
 from .forms import LoginForm, RegisterForm, ProfileUpdateForm
 
@@ -64,3 +66,21 @@ def profile_view(request):
     else:
         form = ProfileUpdateForm(instance=request.user)#otherwise, just get current user info
     return render(request, 'profile.html', {'form': form, 'user': user})
+
+
+#password reset views
+
+class PasswordResetView(PasswordResetView):
+    template_name = 'registration/password_reset_form.html'  # Custom template for reset request
+    form_class = PasswordResetForm
+    success_url = reverse_lazy('password_reset_done')  # Redirect after success
+
+class PasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'registration/password_reset_done.html'  # Custom template for done page
+
+class PasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'registration/password_reset_confirm.html'  # Custom template for password reset form
+    success_url = reverse_lazy('password_reset_complete')  # Redirect after success
+
+class PasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'registration/password_reset_complete.html'  # Custom template for completion page
