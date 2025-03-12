@@ -12,8 +12,8 @@ class User(AbstractUser):
     password = models.CharField(max_length=100)
     #important info on account creation
     email = models.CharField(max_length=100, primary_key=True, unique=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
 
     #extra permissions
     is_superuser = models.BooleanField(default=False)#gives every permission possible
@@ -29,7 +29,7 @@ class User(AbstractUser):
 
     #to string function
     def __str__(self):
-        return self.email
+        return self.username
     
     #custom .clean function for email
     def clean(self):
