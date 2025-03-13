@@ -10,10 +10,10 @@
 }
 
 :root {
-    --black-color: #07070700;
+    --black: black;
     --white-color: #fff;
-    --red-color: rgb(210, 28, 28);
-    --dark-red-color: rgb(135, 3, 3);
+    --blue: #007bff;
+    --darkblue: #0056b3;
 }
 
 html {
@@ -22,8 +22,10 @@ html {
 
 body {
     color: var(--white-color);
+    min-height: 100vh;
 }
 
+/* Navbar Section */
 header {
     position: fixed;
     top: 0;
@@ -55,7 +57,7 @@ nav a {
 }
 
 nav a.active {
-    color: var(--red-color);
+    color: var(--blue);
 }
 
 nav.active {
@@ -68,17 +70,23 @@ nav.active {
     color: black;
 }
 
-/* Navbar customization above */
-
+/* Home Section below */
 .home-section {
     position: absolute;
     width: 100%;
     height: 100%;
     padding: 10rem 9% 2rem;
     background: var(--white-color);
+    align-content: center;
 }
 
-/* Login form customization below */
+.home-section h1 {
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(50px, 8vw, 100px);
+}
+
+/* Login Section customization below */
 .login-section {
     position: absolute;
     width: 100%;
@@ -89,35 +97,33 @@ nav.active {
     align-items: center;
     color: var(--white-color);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-height: calc(100vh - 80px);
+    /* min-height: calc(100vh - 80px); */
 }
 
 .login-container {
+    display: flex;
     background: var(--white-color);
     min-height: auto;
-    max-width: 90%;
+    width: min(350px, 90%);
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
-    width: 350px;
     text-align: center;
     transition: all 0.3s ease-in-out;
     overflow: hidden;
-
-    /* border-style: dotted;
-    border-color: blue; */
 }
 
 .login-form {
+    align-content: center;
     padding: 25px;
     width: 100%;
-
-    /* border-style: dotted;
-    border-color: red; */
 }
 
 .login-form h2 {
     color: black;
     font-size: 2.8rem;
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
 }
 
 .input-group {
@@ -140,7 +146,7 @@ nav.active {
     color: black;
 }
 
-.input-group input {
+.form-control {
     width: 100%;
     padding: 18px;
     border: 1px solid #ccc;
@@ -148,7 +154,7 @@ nav.active {
     font-size: 1.6rem;
 }
 
-.input-group input:focus {
+.form-control:focus {
     border-color: var(--red-color);
     border-width: .15rem;
     outline: none;
@@ -163,12 +169,12 @@ nav.active {
 .forgot-password a {
     font-size: 14px;
     text-decoration: none;
-    color: #007bff;
+    color: var(--blue);
     transition: color 0.3s ease-in-out;
 }
 
 .forgot-password a:hover {
-    color: #0056b3;
+    color: var(--darkblue);
     text-decoration: underline;
 }
 
@@ -176,8 +182,7 @@ nav.active {
 button {
     width: 100%;
     padding: 18px;
-    /* background: linear-gradient(135deg, #007bff, #0056b3); */
-    background: linear-gradient(135deg, #b81d1d, var(--red-color));
+    background: linear-gradient(135deg, var(--blue), var(--darkblue));
     color: var(--white-color);
     border: none;
     border-radius: 50px;
@@ -188,12 +193,12 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(135deg, #541414, var(--dark-red-color));
+    background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
 }
 
 /* Register Link */
 .register-link {
-    margin-top: 15px;
+    margin: 15px 15px;
 }
 
 .register-link p {
@@ -202,20 +207,83 @@ button:hover {
 }
 
 .register-link a {
-    color: #007bff;
+    color: var(--blue);
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease-in-out;
 }
 
 .register-link a:hover {
-    color: #0056b3;
+    color: var(--darkblue);
     text-decoration: underline;
 }
 
 
-/* Media Query for Larger Screens */
-/* Media Queries for Responsiveness */
+
+/* Register Section below */
+.register-container {
+    display: flex;
+    background: var(--white-color);
+    min-height: auto;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
+    width: 350px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.register-form {
+    align-content: center;
+    padding: 25px;
+    width: 100%;
+}
+
+.register-form h2 {
+    color: black;
+    font-size: 2.8rem;
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
+}
+
+
+
+
+
+/* Styles for very small devices*/
+@media (max-width: 575px) {
+    #menu-icon {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        text-align: center;
+        display: none;
+
+    }
+
+    nav.active {
+        display: block;
+    }
+
+    nav a {
+        display: block;
+        margin: 4rem 0;
+
+    }
+
+}
+
 
 /* Mobile Devices (up to 767px) */
 @media (max-width: 76.7rem) {
@@ -247,73 +315,14 @@ button:hover {
 
     }
 
-    .login-container {
-        width: 90%;
-        padding: 20px;
-        height: fit-content;
-    }
 
-    .login-section {
-        padding-top: 100px;
-    }
 }
 
 /* Tablets (768px to 1023px) */
-@media (min-width: 76.8rem) and (max-width: 102.3rem) {
-    .login-container {
-        width: 50%;
-        /* Adjust width for tablets */
-        max-width: 500px;
-        padding: 30px;
-    }
-
-    /* .input-group input {
-        font-size: 18px;
-    }
-
-    button {
-        font-size: 18px;
-    } */
-}
+@media (min-width: 768px) and (max-width: 1023px) {}
 
 /* Desktops (1024px to 1439px) */
-@media (min-width: 102.4rem) and (max-width: 143.9rem) {
-    .login-container {
-        width: 40%;
-        max-width: 600px;
-        padding: 35px;
-    }
-
-    /* .input-group label {
-        font-size: 16px;
-    }
-
-    .input-group input {
-        font-size: 20px;
-    }
-
-    button {
-        font-size: 20px;
-    } */
-}
+@media (min-width: 1024px) and (max-width: 1439px) {}
 
 /* Larger Desktops (1440px and above) */
-@media (min-width: 144rem) {
-    .login-container {
-        width: 30%;
-        max-width: 700px;
-        padding: 40px;
-    }
-
-    /* .input-group label {
-        font-size: 18px;
-    }
-
-    .input-group input {
-        font-size: 22px;
-    }
-
-    button {
-        font-size: 22px;
-    } */
-}
+@media (min-width: 1440px) {}
