@@ -56,7 +56,7 @@ def logout_view(request):
 def profile_view(request):
     user = request.user
     if request.method == 'POST':#if user is changing info
-        form = ProfileUpdateForm(request.POST, instance=request.user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         print('yippee"')
         if form.is_valid():
             print("print updated")

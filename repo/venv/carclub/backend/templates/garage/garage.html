@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
 <main class="container-fluid">
+
     {% if messages %}
     <ul>
         {% for message in messages %}
@@ -8,11 +9,16 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <div class="item-grid">
+
+    <div class="header">
+        <a class="nav-link" href="{% url 'garage/add_car'%}">Add a car</a>
+    </div>
+
+    <div class="car-grid">
         {% for car in cars %}
             <div class="car-card">
                 <!-- Display image -->
-                <img src="{{ car.profile_picture }}" alt="{{ car.car_name }}">
+                <img src="{{ car.car_picture }}" alt="{{ car.car_name }}">
                 <!-- Display name, i'm using to string for this -->
                 <h3>{{ car }}</h3>
                 <!-- Display codriven -->

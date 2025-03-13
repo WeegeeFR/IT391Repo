@@ -10,8 +10,15 @@
     </ul>
   {% endif %}
   <h1>{{ user.username }}'s Profile</h1>
-  <form method="POST">
+  {% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200">
+  {% endif %}
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <div>
+      <label for="id_profile_picture">Upload Profile Picture:</label>
+      {{ form.profile_picture }}
+    </div>
     <div>
       <label for="id_username">Username:</label>
       {{ form.username }}

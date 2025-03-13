@@ -11,7 +11,8 @@ class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     #important info on account creation
-    email = models.CharField(max_length=100, primary_key=True, unique=True)
+    user_id = models.IntegerField(primary_key=True, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
 
@@ -25,7 +26,7 @@ class User(AbstractUser):
     date_joined = models.CharField(max_length=100)
 
     #extra user fields
-    profile_picture = models.ImageField(upload_to='default_picture', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
 
     #to string function
     def __str__(self):
@@ -51,12 +52,13 @@ class User(AbstractUser):
 class Car(models.Model):
     #basic identifier info
     car_id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    #car info
     car_owner = models.CharField(max_length=100, null=False)
     car_codriven = models.BooleanField(default=False)
-    #car info
     car_name = models.CharField(max_length=100)
     car_brand = models.CharField(max_length=100)
-    profile_picture = models.ImageField(upload_to='default_picture', null=True, blank=True)
+    car_picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
     #Tire Id fields for the car
     left_front_tire = models.IntegerField()
     left_back_tire = models.IntegerField()
@@ -77,7 +79,7 @@ class Tire(models.Model):
     #identifier info
     tire_id = models.IntegerField(primary_key=True, null=False)
     date_driven =  models.DateField()
-    tire_picture = models.ImageField(upload_to='default_picture', null=True, blank=True)
+    tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
 
     #information about tire
     tire_pressure = models.FloatField(null=True)

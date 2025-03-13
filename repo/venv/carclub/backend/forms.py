@@ -64,4 +64,4 @@ class ProfileUpdateForm(UserChangeForm):
     
     class Meta:#metatable data
         model = User#model form is using
-        fields = ['username', 'first_name', 'last_name', 'email']#fields from the model to get for form
+        fields = ['username', 'first_name', 'last_name', 'email', 'profile_picture']#fields from the model to get for form
