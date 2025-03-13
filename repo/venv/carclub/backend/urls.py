@@ -19,7 +19,7 @@ urlpatterns = [
 
     #garage pathing
     path("garage/", views.garage_view, name="garage"),
-    path("garage/add_car", views.garage_view, name="add_car"),
+    path("garage/add_car", views.add_car_view, name="add_car"),
 
     #password reset pathing
     path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),

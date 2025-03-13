@@ -74,3 +74,7 @@ def garage_view(request):
     user = request.user
     cars = Car.objects.all().filter(owner=user)
     return render(request, 'garage/garage.html', {'cars': cars})
+
+@login_required
+def add_car_view(request):
+    return render(request, 'garage/add_car.html')
