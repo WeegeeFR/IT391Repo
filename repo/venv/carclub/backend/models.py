@@ -11,8 +11,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     #important info on account creation
-    user_id = models.IntegerField(primary_key=True, unique=True)
-    email = models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, primary_key=True, unique=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
 
@@ -52,7 +51,6 @@ class User(AbstractUser):
 class Car(models.Model):
     #basic identifier info
     car_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     #car info
     car_owner = models.CharField(max_length=100, null=False)
     car_codriven = models.BooleanField(default=False)
