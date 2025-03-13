@@ -52,11 +52,11 @@ class Car(models.Model):
     #basic identifier info
     car_id = models.IntegerField(primary_key=True)
     #car info
-    car_owner = models.CharField(max_length=100, null=False)
-    car_codriven = models.BooleanField(default=False)
-    car_name = models.CharField(max_length=100)
-    car_brand = models.CharField(max_length=100)
-    car_picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    codriven = models.BooleanField(default=False)
+    name = models.CharField(max_length=100)
+    brand = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
     #Tire Id fields for the car
     left_front_tire = models.IntegerField()
     left_back_tire = models.IntegerField()
@@ -76,6 +76,7 @@ class Car(models.Model):
 class Tire(models.Model):
     #identifier info
     tire_id = models.IntegerField(primary_key=True, null=False)
+    tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE, null=True)
     date_driven =  models.DateField()
     tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
 

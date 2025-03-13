@@ -72,5 +72,5 @@ def profile_view(request):
 def garage_view(request):
     #get all cars, filters them to username, renders the template for the garage
     user = request.user
-    cars = Car.objects.all().filter(car_owner=user.username)
+    cars = Car.objects.all().filter(owner=user)
     return render(request, 'garage/garage.html', {'cars': cars})

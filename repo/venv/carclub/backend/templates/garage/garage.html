@@ -11,16 +11,16 @@
     {% endif %}
 
     <div class="header">
-        <a class="nav-link" href="{% url 'garage/add_car'%}">Add a car</a>
+        <a class="nav-link" href="{% url 'add_car'%}">Add a car</a>
     </div>
 
     <div class="car-grid">
         {% for car in cars %}
             <div class="car-card">
                 <!-- Display image -->
-                <img src="{{ car.car_picture }}" alt="{{ car.car_name }}">
+                <img src="{{ car.picture }}" alt="{{ car.name }}">
                 <!-- Display name, i'm using to string for this -->
-                <h3>{{ car }}</h3>
+                <h3>Car Name: {{ car.name }}</h3>
                 <!-- Display codriven -->
                 <p>Co-driven: {{ car.co_driven }}</p>
             </div>
