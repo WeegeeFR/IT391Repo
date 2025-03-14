@@ -58,10 +58,10 @@ class Car(models.Model):
     brand = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
     #Tire Id fields for the car
-    left_front_tire = models.IntegerField()
-    left_back_tire = models.IntegerField()
-    right_front_tire = models.IntegerField()
-    right_back_tire = models.IntegerField()
+    left_front_tire = models.IntegerField(null=True)
+    left_back_tire = models.IntegerField(null=True)
+    right_front_tire = models.IntegerField(null=True)
+    right_back_tire = models.IntegerField(null=True)
 
     #extra fields for functionality
     favorite_car = models.BooleanField(default=False)
@@ -75,12 +75,14 @@ class Car(models.Model):
 #tire model for database
 class Tire(models.Model):
     #identifier info
-    tire_id = models.IntegerField(primary_key=True, null=False)
+    tire_id = models.IntegerField(primary_key=True)
+    #cascade to handle if car is deleted, tires will also be deleted
     tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE, null=True)
-    date_driven =  models.DateField()
+    date_driven =  models.DateField(null=True)
     tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
 
     #information about tire
+    tire_brand = models.CharField(max_length=100, null=True)
     tire_pressure = models.FloatField(null=True)
     tread_wear = models.CharField(max_length=255, null=True)
     highway_miles = models.IntegerField(null=True)

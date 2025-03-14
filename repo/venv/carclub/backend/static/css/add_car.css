@@ -1,0 +1,12 @@
+ /*CSS Flexbox layout for the forms*/
+ .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.form-side {
+    width: 45%;
+}
+.hidden {
+    display: none;
+}
