@@ -70,7 +70,7 @@ class Car(models.Model):
 
     #to string function
     def __str__(self):
-        return self.car_name
+        return self.name
 
 #tire model for database
 class Tire(models.Model):

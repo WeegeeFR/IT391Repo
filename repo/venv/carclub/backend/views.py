@@ -73,6 +73,7 @@ def garage_view(request):
     #get all cars, filters them to username, renders the template for the garage
     user = request.user
     cars = Car.objects.all().filter(owner=user)
+    print(cars)
     return render(request, 'garage/garage.html', {'cars': cars})
 
 @login_required
@@ -81,9 +82,10 @@ def add_car_view(request):
     car_form = CarCreationForm(request.POST or None)
     tire_forms = [TireCreationForm(request.POST or None) for number in range(4)]
     user = request.user
-
     if request.method == "POST":
+        print("post method")
         if car_form.is_valid():
+            print('car is valid')
             #get newly added car
             added_car = car_form.save()
 
