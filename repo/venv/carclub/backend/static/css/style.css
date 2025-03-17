@@ -120,7 +120,7 @@ nav.active {
 
 .login-form h2 {
     color: black;
-    font-size: 2.8rem;
+    font-size: clamp(1.8rem, 6vw, 3rem);
     padding: .5rem;
     padding: 0;
     margin: 15px 15px;
@@ -135,23 +135,23 @@ nav.active {
     display: flex;
     align-items: center;
     font-weight: 100;
-    font-size: 1.6rem;
+    font-size: clamp(.8rem, 8vw, 1.6rem);
     margin-bottom: 5px;
     color: black;
 }
 
 .input-group label i {
     margin-right: 8px;
-    font-size: 30px;
+    font-size: clamp(1.6rem, 8vw, 3rem);
     color: black;
 }
 
 .form-control {
     width: 100%;
-    padding: 18px;
+    padding: clamp(1rem, 3vw, 1.8rem);
     border: 1px solid #ccc;
     border-radius: 50px;
-    font-size: 1.6rem;
+    font-size: clamp(.5rem, 8vw, 1.6rem);
 }
 
 .form-control:focus {
@@ -242,7 +242,7 @@ button:hover {
 
 .register-form h2 {
     color: black;
-    font-size: 2.8rem;
+    font-size: clamp(1.8rem, 6vw, 3rem);
     padding: .5rem;
     padding: 0;
     margin: 15px 15px;
