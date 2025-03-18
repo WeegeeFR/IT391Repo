@@ -1,8 +1,16 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
+
 <!-- Homepage section -->
 <section class="home-section">
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <h1 style="color: black;">Welcome</h1>
-
 </section>
+
 {% endblock %}

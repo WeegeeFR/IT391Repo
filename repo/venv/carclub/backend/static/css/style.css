@@ -192,6 +192,7 @@ button {
     transition: background 0.3s ease-in-out;
 }
 
+<<<<<<< HEAD
 button:hover {
     background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
 }
@@ -326,3 +327,8 @@ button:hover {
 
 /* Larger Desktops (1440px and above) */
 @media (min-width: 1440px) {}
+=======
+/* Further appereance for forms above */
+
+/* Garage Appearance for grid */
+>>>>>>> trevin

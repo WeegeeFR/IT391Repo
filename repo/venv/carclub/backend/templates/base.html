@@ -14,6 +14,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <header>
         <a href="{% url 'home' %}" class="logo">Car Club</a>
 
@@ -26,6 +27,52 @@
         </nav>
     </header>
 
+=======
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md sticky-top navbar-dark">
+        <div class="container-fluid nav-container">
+            <a class="navbar-brand" href="{% url 'home'%}">
+                <i class="fa-solid fa-car"></i> CarClub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home'%}">Home</a>
+                    </li>
+                    <!--check if user isn't logged in yet to display register/login-->
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login'%}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register'%}">Register</a>
+                        </li>
+                    <!--Check if user is logged in to display profile link-->
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'garage'%}">Garage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile'%}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+>>>>>>> trevin
     {% block content %} {% endblock %}
 
     <script src="{% static 'js/script.js'%}"></script>

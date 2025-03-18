@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os.path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,9 +77,17 @@ WSGI_APPLICATION = 'carclub.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    },
+    'mysql': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'it391-testdb',
+        'USER': 'phpmyadmin',
+        'PASSWORD': 'ab12cd34',
+        'HOST': '10.111.21.97',  # or use the appropriate host (e.g., an IP address or domain)
+        'PORT': '3306',  # default MySQL port
     }
 }
 
@@ -124,6 +133,18 @@ STATIC_URL = 'static/' # The URL path where static files will be served.
 STATICFILES_DIRS = [BASE_DIR / "carclub"] # Additional directories where Django will look for static files.
 # My comment: In production, Django collects all static files into a single folder using static_root.
 STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
+
+#media folder settings for pictures and stuff, setting a default folder for it
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#all the settings for email sending
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = 'your_email@gmail.com'
+#EMAIL_HOST_PASSWORD = 'your_email_password'
 
 
 

@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
+{% block content %}
+<main class="container-fluid">
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="header">
+        <a class="add-car-link" href="{% url 'add_car'%}">Add a car</a>
+    </div>
+
+    <div class="car-grid">
+        {% for car in cars %}
+            <div class="car-card">
+                <!-- Display image -->
+                <img src="{{ car.picture }}" alt="{{ car.name }}">
+                <!-- Display name, i'm using to string for this -->
+                <h3>Car Name: {{ car.name }}</h3>
+                <!-- Display codriven -->
+                <p>Co-driven: {{ car.co_driven }}</p>
+            </div>
+        {% empty %}
+            <p>Garage is empty, consider adding a car!</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

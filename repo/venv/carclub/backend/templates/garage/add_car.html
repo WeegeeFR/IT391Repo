@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
+{% block content %}
+<main class="container-fluid">
+    <!-- Main Form -->
+    <form method="post">
+        {% csrf_token %}
+        {{ car_form.as_p }}
+
+        <div class="form-container">
+            <!-- Item forms (initially hidden) -->
+            <div class="tire-form" id="form1" style="display:none;">
+                <h3>Left Front Form</h3>
+                {{ tire_forms.0.as_p }} <!-- Form 0 -->
+            </div>
+
+            <div class="tire-form" id="form2" style="display:none;">
+                <h3>Left Back Form</h3>
+                {{ tire_forms.1.as_p }} <!-- Form 1 -->
+            </div>
+
+            <div class="tire-form" id="form3" style="display:none;">
+                <h3>Right Front Form</h3>
+                {{ tire_forms.2.as_p }} <!-- Form 2 -->
+            </div>
+
+            <div class="tire-form" id="form4" style="display:none;">
+                <h3>Right Back Form</h3>
+                {{ tire_forms.3.as_p }} <!-- Form 3 -->
+            </div>
+            <!-- Buttons to show item forms -->
+            <button type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front Tire</button>
+            <button type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back Tire</button>
+            <button type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front Tire</button>
+            <button type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back Tire</button>
+        </div>
+
+        <button type="submit">Create Vehicle</button>
+    </form>
+    <!--Javascript to deal with the four tire buttons-->
+    <script>
+        // JavaScript to show/hide item forms when the buttons are clicked
+        function showForm(formNumber) {
+            var forms = document.querySelectorAll('.tire-form');
+            forms.forEach(function(form) {
+                form.style.display = 'none'; //hide every form
+            });
+            // Show the selected form
+            var selectedForm = document.getElementById('form' + formNumber);
+            if (selectedForm) {
+                selectedForm.style.display = 'block'; //show the selected form
+            }
+
+        }
+    </script>
+</main>
+{% endblock %}

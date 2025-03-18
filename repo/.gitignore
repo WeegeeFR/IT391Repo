@@ -4,3 +4,4 @@ venv/Scripts
 venv/pyvenv.cfg
 venv/carclub/backend/__pycache__
 venv/carclub/backend/migrations
+venv/carclub/carclub/__pycache__
