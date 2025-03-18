@@ -121,7 +121,7 @@ USE_TZ = True
 
 # My comments below: this is to serve non-dynamic content like: css, javascript, images
 STATIC_URL = 'static/' # The URL path where static files will be served.
-STATICFILES_DIRS = [BASE_DIR / "static"] # Additional directories where Django will look for static files.
+STATICFILES_DIRS = [BASE_DIR / "carclub"] # Additional directories where Django will look for static files.
 # My comment: In production, Django collects all static files into a single folder using static_root.
 STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
 

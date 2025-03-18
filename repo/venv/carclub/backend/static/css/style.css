@@ -1,67 +1,328 @@
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    border: none;
+    outline: none;
+
+}
+
+:root {
+    --black: black;
+    --white-color: #fff;
+    --blue: #007bff;
+    --darkblue: #0056b3;
+}
+
+html {
+    font-size: 62.5%;
 }
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--white-color);
+    min-height: 100vh;
 }
 
-/* Nav bar appearance */
-.navbar {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background: #212A31;
+/* Navbar Section */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background: var(--white-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    border-bottom-style: solid;
+    border-radius: 0;
+    box-shadow: 0 4px 6px -3px rgba(0, 0, 0, 0.2);
 }
 
-.nav-container {
-    margin: 0 20px;
+.logo {
+    font-size: 3rem;
+    color: black;
+    font-weight: 600;
 }
 
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.2rem;
+nav a {
+    color: black;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-left: 3.5rem;
+    transition: .3s;
 }
 
-.nav-link {
-    font-size: 1.1em;
-    color: white;
-    transition: color 0.2s ease;
+nav a.active {
+    color: var(--blue);
 }
 
-.nav-link:hover {
-    color: orange;
+nav.active {
+    background-color: var(--white-color);
 }
 
-.nav-item .btn {
-    border-radius: 20px;
-    transition: background 0.3s ease, transform 0.2s ease;
+#menu-icon {
+    display: none;
+    font-size: 4rem;
+    color: black;
 }
 
-.nav-item .btn:hover {
-    background: #f8f9fa;
-    transform: scale(1.05);
+/* Home Section below */
+.home-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    background: var(--white-color);
+    align-content: center;
 }
 
-/* Further appereance for forms below */
-form {
-    margin-top: 150px;
-
+.home-section h1 {
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(50px, 8vw, 100px);
 }
 
-form input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+/* Login Section customization below */
+.login-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* min-height: calc(100vh - 80px); */
+}
+
+.login-container {
+    display: flex;
+    background: var(--white-color);
+    min-height: auto;
+    width: min(350px, 90%);
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.login-form {
+    align-content: center;
+    padding: 25px;
     width: 100%;
 }
 
-form input:focus {
-    box-shadow: 0 0 5px rgba(3, 119, 244, 0.5);
+.login-form h2 {
+    color: black;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
 }
 
-.btn-primary {
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+    font-size: clamp(.8rem, 8vw, 1.6rem);
+    margin-bottom: 5px;
+    color: black;
+}
+
+.input-group label i {
+    margin-right: 8px;
+    font-size: clamp(1.6rem, 8vw, 3rem);
+    color: black;
+}
+
+.form-control {
+    width: 100%;
+    padding: clamp(1rem, 3vw, 1.8rem);
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    font-size: clamp(.5rem, 8vw, 1.6rem);
+}
+
+.form-control:focus {
+    border-color: var(--red-color);
+    border-width: .15rem;
+    outline: none;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--blue);
+    transition: color 0.3s ease-in-out;
+}
+
+.forgot-password a:hover {
+    color: var(--darkblue);
+    text-decoration: underline;
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--blue), var(--darkblue));
+    color: var(--white-color);
     border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
 }
 
-/* Further appereance for forms above */
+button:hover {
+    background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
+}
+
+/* Register Link */
+.register-link {
+    margin: 15px 15px;
+}
+
+.register-link p {
+    font-size: 14px;
+    color: black;
+}
+
+.register-link a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.register-link a:hover {
+    color: var(--darkblue);
+    text-decoration: underline;
+}
+
+
+
+/* Register Section below */
+.register-container {
+    display: flex;
+    background: var(--white-color);
+    min-height: auto;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
+    width: 350px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.register-form {
+    align-content: center;
+    padding: 25px;
+    width: 100%;
+}
+
+.register-form h2 {
+    color: black;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
+}
+
+
+
+
+
+/* Styles for very small devices*/
+@media (max-width: 575px) {
+    #menu-icon {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        text-align: center;
+        display: none;
+
+    }
+
+    nav.active {
+        display: block;
+    }
+
+    nav a {
+        display: block;
+        margin: 4rem 0;
+
+    }
+
+}
+
+
+/* Mobile Devices (up to 767px) */
+@media (max-width: 76.7rem) {
+    #menu-icon {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        text-align: center;
+        display: none;
+
+    }
+
+    nav.active {
+        display: block;
+    }
+
+    nav a {
+        display: block;
+        margin: 4rem 0;
+
+    }
+
+
+}
+
+/* Tablets (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {}
+
+/* Desktops (1024px to 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {}
+
+/* Larger Desktops (1440px and above) */
+@media (min-width: 1440px) {}
