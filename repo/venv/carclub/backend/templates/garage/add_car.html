@@ -1,8 +1,8 @@
-{% extends 'base.html' %} {% block tittle %}Adding car{% endblock %}
+{% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
-<main class="add_car-section">
+<main class="add-car-section">
     <!-- Main Form -->
-    <form method="post">
+    <form method="post" class="car-form">
         {% csrf_token %}
         {{ car_form.as_p }}
 
@@ -28,13 +28,16 @@
                 {{ tire_forms.3.as_p }} <!-- Form 3 -->
             </div>
             <!-- Buttons to show item forms -->
-            <button type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front Tire</button>
-            <button type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back Tire</button>
-            <button type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front Tire</button>
-            <button type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back Tire</button>
+            <button class="tire-btn" type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front
+                Tire</button>
+            <button class="tire-btn" type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back Tire</button>
+            <button class="tire-btn" type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front
+                Tire</button>
+            <button class="tire-btn" type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back
+                Tire</button>
         </div>
 
-        <button type="submit">Create Vehicle</button>
+        <button class="create-vehicle-btn" type="submit">Create Vehicle</button>
     </form>
     <!--Javascript to deal with the four tire buttons-->
     <script>

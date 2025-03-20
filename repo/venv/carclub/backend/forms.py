@@ -70,13 +70,19 @@ class ProfileUpdateForm(UserChangeForm):
 #add car forms
 class CarCreationForm(forms.ModelForm):
     #can leave codriven as unknown if person cant remember
-    codriven = forms.BooleanField(widget=forms.NullBooleanSelect)
-    brand = forms.CharField(max_length=100)
-    free_form_text = forms.CharField(widget=forms.Textarea, max_length=500)
+    codriven = forms.BooleanField(widget=forms.NullBooleanSelect(attrs={'class': 'form-select'}))
+    brand = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter car brand'}))
+    free_form_text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-textarea', 'rows': 4, 'placeholder': 'Enter details...'}),
+        required=False
+    )
     
     class Meta:
         model = Car
         fields = ['owner', 'codriven', 'brand', 'picture', 'free_form_text']
+        widgets = {
+            'owner': forms.Select(attrs={'class': 'form-select'}),
+            'picture': forms.ClearableFileInput(attrs={'class': 'form-file-input'})
+        }
 
 
 class TireCreationForm(forms.ModelForm):
