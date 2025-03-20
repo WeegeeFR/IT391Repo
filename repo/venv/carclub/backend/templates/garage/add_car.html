@@ -2,36 +2,9 @@
 {% block content %}
 <main class="add_car-section">
     <!-- Main Form -->
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
-
-        <div class="mb-3">
-            <label for="{{ form.owner.id_for_label }}" class="form-label">Owner</label>
-            {{ form.owner }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.codriven.id_for_label }}" class="form-label">Co-driven</label>
-            {{ form.codriven }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.brand.id_for_label }}" class="form-label">Brand</label>
-            {{ form.brand }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.picture.id_for_label }}" class="form-label">Picture</label>
-            {{ form.picture }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.free_form_text.id_for_label }}" class="form-label">Additional Details</label>
-            {{ form.free_form_text }}
-        </div>
-
-
-
+        {{ car_form.as_p }}
 
         <div class="form-container">
             <!-- Item forms (initially hidden) -->
@@ -55,19 +28,13 @@
                 {{ tire_forms.3.as_p }} <!-- Form 3 -->
             </div>
             <!-- Buttons to show item forms -->
-            <button class="add_tire_btns" type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front
-                Tire</button>
-            <button class="add_tire_btns" type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back
-                Tire</button>
-            <button class="add_tire_btns" type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front
-                Tire</button>
-            <button class="add_tire_btns" type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back
-                Tire</button>
+            <button type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front Tire</button>
+            <button type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back Tire</button>
+            <button type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front Tire</button>
+            <button type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back Tire</button>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create Vehicle</button>
-
-
+        <button type="submit">Create Vehicle</button>
     </form>
     <!--Javascript to deal with the four tire buttons-->
     <script>
