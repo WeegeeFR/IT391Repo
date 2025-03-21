@@ -140,12 +140,12 @@ nav.active {
     margin: 15px 15px;
 }
 
-.input-group {
+.input-group-login {
     margin-bottom: 15px;
     text-align: left;
 }
 
-.input-group label {
+.input-group-login label {
     display: flex;
     align-items: center;
     font-weight: 100;
@@ -154,13 +154,13 @@ nav.active {
     color: black;
 }
 
-.input-group label i {
+.input-group-login label i {
     margin-right: 8px;
     font-size: clamp(1.6rem, 8vw, 3rem);
     color: black;
 }
 
-.myform-control {
+.login-form-control {
     width: 100%;
     padding: clamp(1rem, 3vw, 1.8rem);
     border: 1px solid #ccc;
@@ -168,7 +168,7 @@ nav.active {
     font-size: clamp(.5rem, 8vw, 1.6rem);
 }
 
-.myform-control:focus {
+.login-form-control:focus {
     border-color: var(--red-color);
     border-width: .15rem;
     outline: none;

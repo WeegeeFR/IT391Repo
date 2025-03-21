@@ -1,59 +1,175 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
 <main class="add-car-section">
-    <!-- Main Form -->
-    <form method="post" class="car-form">
-        {% csrf_token %}
-        {{ car_form.as_p }}
-
-        <div class="form-container">
-            <!-- Item forms (initially hidden) -->
-            <div class="tire-form" id="form1" style="display:none;">
-                <h3>Left Front Form</h3>
-                {{ tire_forms.0.as_p }} <!-- Form 0 -->
+    <div class="container fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 p-4">
+                    <h2 class="mb-4 text-center">Add a New Car</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ car_form.owner.id_for_label }}" class="form-label">Owner</label>
+                                {{ car_form.owner }}
+                            </div>
+                            <div class="col-md-6 mb-3 form-check">
+                                {{ car_form.codriven }}
+                                <label for="{{ car_form.codriven.id_for_label }}"
+                                    class="form-check-label">Co-driven</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ car_form.brand.id_for_label }}" class="form-label">Brand</label>
+                                {{ car_form.brand }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ car_form.picture.id_for_label }}" class="form-label">Picture</label>
+                                {{ car_form.picture }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ car_form.free_form_text.id_for_label }}" class="form-label">Additional
+                                Info</label>
+                            {{ car_form.free_form_text }}
+                        </div>
+                        <div class="form-container">
+                            <h4 class="mt-4 text-center">Add Tires</h4>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="tire-form card p-4 mt-2" id="form1" style="display:none;">
+                                        <h5>Left Front Tire</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Picture</label>
+                                            <input type="file" name="tire_picture_1" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Pressure (PSI)</label>
+                                            <input type="number" step="0.1" name="tire_pressure_1" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tread Wear</label>
+                                            <input type="text" name="tread_wear_1" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Highway Miles</label>
+                                            <input type="number" name="highway_miles_1" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Manufacture Date</label>
+                                            {{ tire_forms.0.manufacture_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="tire-form card p-4 mt-2" id="form2" style="display:none;">
+                                        <h5>Left Back Tire</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Picture</label>
+                                            <input type="file" name="tire_picture_2" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Pressure (PSI)</label>
+                                            <input type="number" step="0.1" name="tire_pressure_2" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tread Wear</label>
+                                            <input type="text" name="tread_wear_2" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Highway Miles</label>
+                                            <input type="number" name="highway_miles_2" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Manufacture Date</label>
+                                            {{ tire_forms.1.manufacture_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="tire-form card p-4 mt-2" id="form3" style="display:none;">
+                                        <h5>Right Front Tire</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Picture</label>
+                                            <input type="file" name="tire_picture_3" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Pressure (PSI)</label>
+                                            <input type="number" step="0.1" name="tire_pressure_3" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tread Wear</label>
+                                            <input type="text" name="tread_wear_3" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Highway Miles</label>
+                                            <input type="number" name="highway_miles_3" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Manufacture Date</label>
+                                            {{ tire_forms.2.manufacture_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="tire-form card p-4 mt-2" id="form4" style="display:none;">
+                                        <h5>Right Back Tire</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Picture</label>
+                                            <input type="file" name="tire_picture_4" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tire Pressure (PSI)</label>
+                                            <input type="number" step="0.1" name="tire_pressure_4" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tread Wear</label>
+                                            <input type="text" name="tread_wear_4" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Highway Miles</label>
+                                            <input type="number" name="highway_miles_4" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Manufacture Date</label>
+                                            {{ tire_forms.3.manufacture_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <button class="btn btn-outline-primary" type="button" id="LeftFrontButton"
+                                onclick="showForm(1)">Add
+                                Left Front Tire</button>
+                            <button class="btn btn-outline-primary" type="button" id="LeftBackButton"
+                                onclick="showForm(2)">Add
+                                Left Back Tire</button>
+                            <button class="btn btn-outline-primary" type="button" id="RightFrontButton"
+                                onclick="showForm(3)">Add Right
+                                Front Tire</button>
+                            <button class="btn btn-outline-primary" type="button" id="RightBackButton"
+                                onclick="showForm(4)">Add
+                                Right Back Tire</button>
+                        </div>
+                        <button class="btn btn-success btn-lg w-100 mt-4" type="submit">Create Vehicle</button>
+                    </form>
+                </div>
             </div>
-
-            <div class="tire-form" id="form2" style="display:none;">
-                <h3>Left Back Form</h3>
-                {{ tire_forms.1.as_p }} <!-- Form 1 -->
-            </div>
-
-            <div class="tire-form" id="form3" style="display:none;">
-                <h3>Right Front Form</h3>
-                {{ tire_forms.2.as_p }} <!-- Form 2 -->
-            </div>
-
-            <div class="tire-form" id="form4" style="display:none;">
-                <h3>Right Back Form</h3>
-                {{ tire_forms.3.as_p }} <!-- Form 3 -->
-            </div>
-            <!-- Buttons to show item forms -->
-            <button class="tire-btn" type="button" id="LeftFrontButton" onclick="showForm(1)">Add Left Front
-                Tire</button>
-            <button class="tire-btn" type="button" id="LeftBackButton" onclick="showForm(2)">Add Left Back Tire</button>
-            <button class="tire-btn" type="button" id="RightFrontButton" onclick="showForm(3)">Add Right Front
-                Tire</button>
-            <button class="tire-btn" type="button" id="RightBackButton" onclick="showForm(4)">Add Right Back
-                Tire</button>
         </div>
 
-        <button class="create-vehicle-btn" type="submit">Create Vehicle</button>
-    </form>
-    <!--Javascript to deal with the four tire buttons-->
-    <script>
-        // JavaScript to show/hide item forms when the buttons are clicked
-        function showForm(formNumber) {
-            var forms = document.querySelectorAll('.tire-form');
-            forms.forEach(function (form) {
-                form.style.display = 'none'; //hide every form
-            });
-            // Show the selected form
-            var selectedForm = document.getElementById('form' + formNumber);
-            if (selectedForm) {
-                selectedForm.style.display = 'block'; //show the selected form
-            }
+    </div>
 
+    </div>
+    <script>
+        function showForm(formNumber) {
+            document.querySelectorAll('.tire-form').forEach(form => form.style.display = 'none');
+            document.getElementById('form' + formNumber).style.display = 'block';
         }
     </script>
+
 </main>
 {% endblock %}

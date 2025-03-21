@@ -13,41 +13,55 @@
      /* min-height: calc(100vh - 80px); */
  }
 
- .car-form {
+ /* .car-form {
      width: 100%;
      margin: auto;
      padding: 20px;
      background-color: #f8f9fa;
      border-radius: 8px;
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     color: black;
  }
 
- .car-form p {
+ .input-group-add-car {
      margin-bottom: 15px;
-     color: black;
+     text-align: left;
  }
 
- .car-form label {
-     font-weight: bold;
-     display: block;
+ .input-group-add-car label {
+     display: flex;
+     align-items: center;
+     font-weight: 100;
+     font-size: clamp(.8rem, 8vw, 1.6rem);
      margin-bottom: 5px;
-     font-size: clamp(.8rem, 8vw, 1.6rem);
- }
-
- .car-form input,
- .car-form select,
- .car-form textarea {
-     width: 100%;
-     padding: 8px;
-     margin-bottom: 10px;
-     border: 1px solid #ccc;
-     border-radius: 5px;
- }
-
- .tire-form h3 {
      color: black;
-     font-size: clamp(.8rem, 8vw, 1.6rem);
  }
+
+ .car-form-select,
+ .brand-input {
+     width: 100%;
+     padding: clamp(1rem, 3vw, 1.8rem);
+     border: 1px solid #ccc;
+     border-radius: 30px !important;
+     font-size: clamp(.5rem, 8vw, 1.6rem);
+ }
+
+ .car-form-select:focus {
+     border-color: var(--red-color);
+     border-width: .15rem;
+     outline: none;
+ }
+
+
+
+
+
+
+
+
+
+
+
 
 
  .create-vehicle-btn {
@@ -66,7 +80,7 @@
 
  .create-vehicle-btn:hover {
      background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
- }
+ } */
 
 
 
