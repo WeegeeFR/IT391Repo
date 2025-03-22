@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
-<main class="garage-section">
+<section class="garage-section">
 
     {% if messages %}
     <ul>
@@ -10,11 +10,19 @@
     </ul>
     {% endif %}
 
-    <div class="car-header">
+    {% for car in cars %}
+    {% empty %}
+    <div class="empty-car-header row">
+        <h1 class="empty-car-h1">Garage is empty, consider adding a car!</h1>
+        {% endfor %}
+    </div>
+
+    <div class="car-header row">
         <a class="add-car-link" href="{% url 'add_car'%}">Add a car</a>
     </div>
 
-    <div class="car-grid">
+
+    <div class="car-grid row">
         {% for car in cars %}
         <div class="car-card">
             <!-- Display image -->
@@ -24,9 +32,10 @@
             <!-- Display codriven -->
             <p>Co-driven: {{ car.co_driven }}</p>
         </div>
-        {% empty %}
-        <h1 class="empty-car-h1">Garage is empty, consider adding a car!</h1>
         {% endfor %}
     </div>
-</main>
+
+
+
+</section>
 {% endblock %}

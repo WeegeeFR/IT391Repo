@@ -69,50 +69,16 @@ class ProfileUpdateForm(UserChangeForm):
 
 #add car forms
 class CarCreationForm(forms.ModelForm):
-    #can leave codriven as unknown if person cant remember
-    # codriven = forms.BooleanField(widget=forms.NullBooleanSelect(attrs={'class': 'car-form-select'}))
-    # brand = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'car-form-control', 'placeholder': 'Enter car brand'}))
-    # free_form_text = forms.CharField(widget=forms.Textarea(attrs={'class': 'car-form-textarea', 'rows': 4, 'placeholder': 'Enter details...'}),
-    #     required=False
-    # )
-
-    # class Meta:
-    #     model = Car
-    #     fields = ['owner', 'codriven', 'brand', 'picture', 'free_form_text']
-    #     widgets = {
-    #         'owner': forms.Select(attrs={'class': 'car-form-select'}),
-    #         'picture': forms.ClearableFileInput(attrs={'class': 'form-file-input'})
-    #     }
-
-    codriven = forms.BooleanField(
-        required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
-    )
-    brand = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control form-control-lg',
-            'placeholder': 'Enter car brand'
-        })
-    )
-    free_form_text = forms.CharField(
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'rows': 4,
-            'placeholder': 'Enter additional information...',
-            'style': 'resize: none;'
-        }),
-        required=False
-    )
-
     class Meta:
         model = Car
         fields = ['owner', 'codriven', 'brand', 'picture', 'free_form_text']
         widgets = {
-            'owner': forms.Select(attrs={'class': 'form-select form-select-lg'}),
-            'picture': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg'}),
+            'owner': forms.Select(attrs={'class': 'form-select'}),  # Correct dropdown for ForeignKey
+            'codriven': forms.NullBooleanSelect(attrs={'class': 'form-select'}),  # Works for nullable boolean
+            'brand': forms.TextInput(attrs={'class': 'form-control', 'maxlength': 100}),
+            'picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'free_form_text': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'maxlength': 500})
         }
-    
 
 
 class TireCreationForm(forms.ModelForm):
@@ -120,42 +86,15 @@ class TireCreationForm(forms.ModelForm):
     # tread_wear = forms.CharField(max_length=255)
     # tread_wear = forms.CharField(max_length=255)
     # highway_miles = forms.IntegerField()
-    # #widget to select date, empty_label to make it not required
-    # manufacture_date = forms.DateField(widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")))
-
-    # class Meta:
-    #     model = Tire
-    #     fields = ['tire_picture', 'tire_pressure', 'tread_wear', 'highway_miles', 'manufacture_date']
-
-    tire_pressure = forms.FloatField(
-        widget=forms.NumberInput(attrs={
-            'class': 'form-control form-control-lg',
-            'placeholder': 'Enter tire pressure (PSI)'
-        })
-    )
-    tread_wear = forms.CharField(
-        max_length=255,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control form-control-lg',
-            'placeholder': 'Describe tread wear'
-        })
-    )
-    highway_miles = forms.IntegerField(
-        widget=forms.NumberInput(attrs={
-            'class': 'form-control form-control-lg',
-            'placeholder': 'Enter highway miles'
-        })
-    )
-    manufacture_date = forms.DateField(
-        widget=forms.SelectDateWidget(
-            empty_label=("Year", "Month", "Day"),
-            attrs={'class': 'form-select form-select-lg'}
-        )
-    )
+    #widget to select date, empty_label to make it not required
+    manufacture_date = forms.DateField(widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")))
 
     class Meta:
         model = Tire
         fields = ['tire_picture', 'tire_pressure', 'tread_wear', 'highway_miles', 'manufacture_date']
         widgets = {
-            'tire_picture': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg'}),
+            'tire_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'tire_pressure': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter tire pressure'}),
+            'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear'}),
+            'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
         }
