@@ -87,7 +87,7 @@ class TireCreationForm(forms.ModelForm):
     # tread_wear = forms.CharField(max_length=255)
     # highway_miles = forms.IntegerField()
     #widget to select date, empty_label to make it not required
-    manufacture_date = forms.DateField(widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")))
+    # manufacture_date = forms.DateField(widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")))
 
     class Meta:
         model = Tire
@@ -97,4 +97,5 @@ class TireCreationForm(forms.ModelForm):
             'tire_pressure': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter tire pressure'}),
             'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear'}),
             'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
+            'manufacture_date': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
         }
