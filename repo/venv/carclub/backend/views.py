@@ -87,8 +87,7 @@ def add_car_view(request):
         if car_form.is_valid():
             print('car is valid')
             #get newly added car
-            added_car = car_form.save()
-
+            added_car = car_form.save(commit=False)
             valid_tires_id = []
             valid_form_numbers = []
             form_dict = {}
@@ -106,7 +105,6 @@ def add_car_view(request):
                 added_car.right_front_tire = form_dict.get(2)
             if form_dict[3]:
                 added_car.right_back_tire = form_dict.get(3)
-
             #return to the garage with a message saying it newly added a car
             messages.success(request, "You have successfully added a vehicle!")
             return redirect('garage')
