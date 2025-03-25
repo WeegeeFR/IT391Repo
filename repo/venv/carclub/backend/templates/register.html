@@ -6,35 +6,35 @@
             {% csrf_token %}
             <h2>Register</h2>
 
-            <div class="input-group">
+            <div class="input-group-login">
                 <label for="{{ form.username.id_for_label }}">
                     <i class='bx bx-user'></i> Username
                 </label>
                 {{ form.username }}
             </div>
 
-            <div class="input-group">
+            <div class="input-group-login">
                 <label for="{{ form.email.id_for_label }}">
                     <i class='bx bx-envelope'></i> Email
                 </label>
                 {{ form.email }}
             </div>
 
-            <div class="input-group">
+            <div class="input-group-login">
                 <label for="{{ form.password1.id_for_label }}">
                     <i class='bx bx-lock'></i> Password
                 </label>
                 {{ form.password1 }}
             </div>
 
-            <div class="input-group">
+            <div class="input-group-login">
                 <label for="{{ form.password2.id_for_label }}">
                     <i class='bx bx-lock-alt'></i> Confirm Password
                 </label>
                 {{ form.password2 }}
             </div>
 
-            <button type="submit">Register</button>
+            <button class="register-btn" type="submit">Register</button>
 
             <div class="register-link">
                 <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>

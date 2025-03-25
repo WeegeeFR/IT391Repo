@@ -46,6 +46,7 @@ header {
     font-size: 3rem;
     color: black;
     font-weight: 600;
+    text-decoration: none;
 }
 
 nav a {
@@ -54,6 +55,7 @@ nav a {
     font-weight: 500;
     margin-left: 3.5rem;
     transition: .3s;
+    text-decoration: none;
 }
 
 nav a.active {
@@ -86,7 +88,19 @@ nav.active {
     font-size: clamp(50px, 8vw, 100px);
 }
 
-/* Login Section customization below */
+/* Profile Section below */
+.profile-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    background: var(--white-color);
+    align-content: center;
+}
+
+
+
+/* Login Section below */
 .login-section {
     position: absolute;
     width: 100%;
@@ -126,12 +140,12 @@ nav.active {
     margin: 15px 15px;
 }
 
-.input-group {
+.input-group-login {
     margin-bottom: 15px;
     text-align: left;
 }
 
-.input-group label {
+.input-group-login label {
     display: flex;
     align-items: center;
     font-weight: 100;
@@ -140,23 +154,24 @@ nav.active {
     color: black;
 }
 
-.input-group label i {
+.input-group-login label i {
     margin-right: 8px;
     font-size: clamp(1.6rem, 8vw, 3rem);
     color: black;
 }
 
-.form-control {
+.login-form-control {
     width: 100%;
     padding: clamp(1rem, 3vw, 1.8rem);
-    border: 1px solid #ccc;
-    border-radius: 50px;
+    background: whitesmoke;
+    border: solid whitesmoke;
+    border-radius: 8px !important;
     font-size: clamp(.5rem, 8vw, 1.6rem);
 }
 
-.form-control:focus {
-    border-color: var(--red-color);
-    border-width: .15rem;
+.login-form-control:focus {
+    border-color: var(--blue);
+    border-width: .2rem;
     outline: none;
 }
 
@@ -179,21 +194,22 @@ nav.active {
 }
 
 /* Submit Button */
-button {
+.login-btn,
+.register-btn {
     width: 100%;
     padding: 18px;
     background: linear-gradient(135deg, var(--blue), var(--darkblue));
     color: var(--white-color);
     border: none;
-    border-radius: 50px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1.6rem;
     font-weight: bold;
     transition: background 0.3s ease-in-out;
 }
 
-<<<<<<< HEAD
-button:hover {
+.login-btn:hover,
+.register-btn:hover {
     background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
 }
 
@@ -327,8 +343,7 @@ button:hover {
 
 /* Larger Desktops (1440px and above) */
 @media (min-width: 1440px) {}
-=======
+
 /* Further appereance for forms above */
 
 /* Garage Appearance for grid */
->>>>>>> trevin

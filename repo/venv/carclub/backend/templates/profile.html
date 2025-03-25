@@ -2,16 +2,17 @@
 {% extends 'base.html' %} {% block tittle %}Profile Page{% endblock %}
 
 {% block content %}
+<main class="profile-section">
   {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
   {% endif %}
   <h1>{{ user.username }}'s Profile</h1>
   {% if user.profile_picture %}
-    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200">
+  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200">
   {% endif %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -38,10 +39,10 @@
       <label for="id_last_name">Last Name:</label>
       {{ form.last_name }}
     </div>
-    
+
     <div>Date Joined: {{ user.date_joined }}</div>
 
     <button type="submit">Save Changes</button>
   </form>
-
+</main>
 {% endblock %}
