@@ -53,11 +53,19 @@
 
 /* Cards for cars in Garage */
 .custom-card {
-    border: none;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .custom-card img {
     object-fit: cover;
+}
+
+.custom-card .card-body {
+    background: rgb(233, 233, 233);
+}
+
+.custom-card .card-title {
+    font-weight: 500;
+    color: black;
 }
