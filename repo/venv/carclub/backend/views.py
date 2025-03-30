@@ -8,6 +8,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, TireCreationForm
 from .models import Car, Tire
+from .handlers import scrape_season_events
 
 
 # Create your views here.
@@ -114,3 +115,23 @@ def add_car_view(request):
         'car_form': car_form,
         'tire_forms': tire_forms
     })
+
+#Statistic page views
+@login_required
+def stats_view(request):
+    #Check if the first button was pressed (e.g., by checking request GET or POST parameters)
+    if request.method == 'POST' and 'get_events' in request.POST:
+        # Generate the dictionary
+        options_dict = scrape_season_events()
+        # Store the dictionary in the session or pass it to the template context
+        request.session['options_dict'] = options_dict
+        return render(request, 'stats/stats.html', {'options_dict': options_dict, 'show_dropdown': True})
+
+    #Handle the second button press (after the dropdown menu is shown)
+    elif request.method == 'POST' and 'selected_event' in request.POST:
+        selected_value = request.POST.get('dropdown')
+        print(selected_value)
+        return HttpResponse("yippee")
+
+    #Default case when the page is first loaded
+    return render(request, 'stats/stats.html', {'show_dropdown': False})
