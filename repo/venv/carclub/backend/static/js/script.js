@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // This is for the navbar link highlight
     // Get the current URL path
     let currentPath = window.location.pathname;
 
@@ -21,6 +22,14 @@ $(document).ready(function () {
         $(this).toggleClass('bx-x');
         $('header nav').toggleClass('active');
     });
+
+    // This is for auto-dismissing Messages
+    setTimeout(function () {
+        $(".alert").fadeOut("slow");
+    }, 5000); // 5 seconds
+
+
+
 });
 
 

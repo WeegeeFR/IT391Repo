@@ -57,11 +57,30 @@ class RegisterForm(forms.Form):
 
 class ProfileUpdateForm(UserChangeForm):
     #Adding field info to the form
-    username = forms.CharField(max_length=50)
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    email = forms.EmailField(widget=forms.EmailInput())
-    profile_picture = forms.ImageField(widget=forms.FileInput())
+    username = forms.CharField(
+        max_length=50,
+        label="Username",  # Explicit label
+        widget=forms.TextInput(attrs={"class": "form-control profile-input"})
+    )
+    first_name = forms.CharField(
+        max_length=100,
+        label="First Name",
+        widget=forms.TextInput(attrs={"class": "form-control profile-input"})
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        label="Last Name",
+        widget=forms.TextInput(attrs={"class": "form-control profile-input"})
+    )
+    email = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput(attrs={"class": "form-control profile-input"})
+    )
+    profile_picture = forms.ImageField(
+        label="Profile Picture",
+        widget=forms.FileInput(attrs={"class": "form-control profile-file-input"})
+    )
+
     class Meta:#metatable data
         model = User#model form is using
         fields = ['username', 'first_name', 'last_name', 'email', 'profile_picture']#fields from the model to get for form
