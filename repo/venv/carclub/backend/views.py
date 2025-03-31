@@ -132,15 +132,12 @@ def stats_view(request):
         selected_setting = request.POST.get('setting')  #radio button selection
         name = request.POST.get('name')
         car_make = request.POST.get('car_make')
-        print(selected_event)
         link_dictionary = get_links_from_string(selected_event)
         first_day_records = get_raw_pax_records(link_dictionary[selected_setting][0], name, car_make, selected_setting)
         second_day_records = []
         if len(link_dictionary[selected_setting]) > 1:
             second_day_records = get_raw_pax_records(link_dictionary[selected_setting][1], name, car_make, selected_setting)
-        print(first_day_records)
-        print(second_day_records)
-        return render(request, 'stats/stats.html', {'first_records': first_day_records, 'second_records': second_day_records,'show_dropdown': True})
+        return render(request, 'stats/stats.html', {'options_dict': scrape_season_events(), 'first_records': first_day_records, 'second_records': second_day_records,'show_dropdown': True, 'setting': selected_setting})
 
     #Default case when the page is first loaded
     return render(request, 'stats/stats.html', {'show_dropdown': False})
