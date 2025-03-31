@@ -21,20 +21,27 @@
             {% endfor %}
         </select>
         <br><br>
-
+        <!-- raw and pax settings for now, need to add final-->
         <label for="raw">
             <input type="radio" name=setting id="raw" value="Raw" checked> Raw
-        </label><br>
+        </label>
         <label for="pax">
             <input type="radio" name=setting id="pax" value="Pax"> Pax
         </label><br>
-        <label for="final">
-            <input type="radio" name=setting id="final" value="Final"> Final
-        </label><br><br>
+
+        <label for="field1">Search by Name</label>
+        <input type="text" id="name" name="name" value="{{ name }}" placeholder="Name">
+        <br><br>
+        
+        <label for="field2">Search by Car Make:</label>
+        <input type="text" id="car_make" name="car_make" value="{{ car_make }}" placeholder="Car Make">
+        <br><br>
         
         <!-- Second Button: Call function with the selected value -->
         <button type="submit" name="selected_event">Get Stats</button>
     </form>
+
+    <!--Listing the records-->
 {% endif %}
 
 {% endblock %}
