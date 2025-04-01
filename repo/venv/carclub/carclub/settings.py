@@ -27,9 +27,7 @@ SECRET_KEY = 'django-insecure-gi#un(_+0j_0da31)kvf7fr1ko6yu0tawwk2pzeq#$vdo3scij
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['10.111.21.97' , '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,7 +55,7 @@ ROOT_URLCONF = 'carclub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,16 +77,21 @@ WSGI_APPLICATION = 'carclub.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "mydatabase",
+        "Name": "mydatabase",
+        
+        #"ENGINE": "django.db.backends.mysql",
+        #'NAME': 'IT391Repo_DB',
+     #  'PASSWORD': 'ab12cd34',
+      #  'HOST': 'localhost',  # or use the appropriate host (e.g., an IP address or domain)
+       # 'PORT': '3306',  # default MySQL port
     },
-    'mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'it391-testdb',
-        'USER': 'phpmyadmin',
-        'PASSWORD': 'ab12cd34',
-        'HOST': '10.111.21.97',  # or use the appropriate host (e.g., an IP address or domain)
-        'PORT': '3306',  # default MySQL port
-    }
+   # 'mysql': {
+    #   'NAME': 'IT391Repo_DB',
+     #   'USER': 'IT391ProjectUser',
+      #  'PASSWORD': 'ab12cd34',
+       # 'HOST': '10.111.21.97',  # or use the appropriate host (e.g., an IP address or domain)
+       #'PORT': '3306',  # default MySQL port
+    #}
 }
 
 
@@ -129,15 +132,15 @@ USE_TZ = True
 
 
 # My comments below: this is to serve non-dynamic content like: css, javascript, images
-STATIC_URL = 'static/' # The URL path where static files will be served.
+STATIC_URL = '/static/' # The URL path where static files will be served.
 STATICFILES_DIRS = [BASE_DIR / "static"] # Additional directories where Django will look for static files.
 # My comment: In production, Django collects all static files into a single folder using static_root.
-STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
-
+# STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
+STATIC_ROOT = '/var/www/html/GetHubRepo/IT391Repo/repo/venv/carclub/backend/static'
 #media folder settings for pictures and stuff, setting a default folder for it
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/var/www/html/GetHubRepo/IT391Repo/repo/venv/carclub/media'
 #all the settings for email sending
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST = 'smtp.gmail.com'
