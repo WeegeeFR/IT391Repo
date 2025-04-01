@@ -1,13 +1,22 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
-<main class="container-fluid">
+
+<!-- Homepage section -->
+<section class="home-section">
     {% if messages %}
-    <ul>
+    <ul class="messages">
         {% for message in messages %}
-            <li>{{ message }}</li>
+        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
         {% endfor %}
     </ul>
     {% endif %}
-    <h2>This is the home page</h2>
-</main>
+
+    <h1 style="color: black;">Welcome</h1>
+</section>
+
 {% endblock %}

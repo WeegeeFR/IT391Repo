@@ -2,46 +2,69 @@
 {% extends 'base.html' %} {% block tittle %}Profile Page{% endblock %}
 
 {% block content %}
+<main class="profile-section">
+
   {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
+  <ul class="messages">
+    {% for message in messages %}
+    <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
   {% endif %}
-  <h1>{{ user.username }}'s Profile</h1>
-  {% if user.profile_picture %}
-    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200">
-  {% endif %}
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div>
-      <label for="id_profile_picture">Choose Profile Picture: </label>
-      {{ form.profile_picture }}
-    </div>
-    <div>
-      <label for="id_username">Username:</label>
-      {{ form.username }}
-    </div>
 
-    <div>
-      <label for="id_email">Email:</label>
-      {{ form.email }}
+
+  <div class="container">
+    <h1 class="text-center profile-title">{{ user.username }}'s Profile</h1>
+
+    <!-- Profile Picture -->
+    {% if user.profile_picture %}
+    <div class="d-flex justify-content-center mb-4">
+      <div class="profile-img-container">
+        <img src="{{ user.profile_picture.url }}" class="profile-img" alt="Profile Picture">
+      </div>
     </div>
+    {% endif %}
 
-    <div>
-      <label for="id_first_name">First Name:</label>
-      {{ form.first_name }}
-    </div>
+    <!-- Form -->
+    <form method="POST" enctype="multipart/form-data" class="needs-validation modern-form">
+      {% csrf_token %}
 
-    <div>
-      <label for="id_last_name">Last Name:</label>
-      {{ form.last_name }}
-    </div>
-    
-    <div>Date Joined: {{ user.date_joined }}</div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="id_username" class="profile-form-label">Username:</label>
+          {{ form.username }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="id_email" class="profile-form-label">Email:</label>
+          {{ form.email }}
+        </div>
+      </div>
 
-    <button type="submit">Save Changes</button>
-  </form>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="id_first_name" class="profile-form-label">First Name:</label>
+          {{ form.first_name }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="id_last_name" class="profile-form-label">Last Name:</label>
+          {{ form.last_name }}
+        </div>
+      </div>
 
+      <div class="mb-3">
+        <label for="id_profile_picture" class="profile-form-label">Profile Picture:</label>
+        {{ form.profile_picture }}
+      </div>
+
+      <button type="submit" class="btn profile-btn profile-btn">Save Changes</button>
+    </form>
+  </div>
+
+
+</main>
 {% endblock %}

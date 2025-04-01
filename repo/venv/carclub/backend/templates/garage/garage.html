@@ -1,32 +1,60 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
-<main class="container-fluid">
+<section class="garage-section">
 
     {% if messages %}
-    <ul>
+    <ul class="messages">
         {% for message in messages %}
-            <li>{{ message }}</li>
+        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
         {% endfor %}
     </ul>
     {% endif %}
 
-    <div class="header">
-        <a class="add-car-link" href="{% url 'add_car'%}">Add a car</a>
-    </div>
-
-    <div class="car-grid">
-        {% for car in cars %}
-            <div class="car-card">
-                <!-- Display image -->
-                <img src="{{ car.picture }}" alt="{{ car.name }}">
-                <!-- Display name, i'm using to string for this -->
-                <h3>Car Name: {{ car.name }}</h3>
-                <!-- Display codriven -->
-                <p>Co-driven: {{ car.co_driven }}</p>
-            </div>
-        {% empty %}
-            <p>Garage is empty, consider adding a car!</p>
+    {% for car in cars %}
+    {% empty %}
+    <div class="empty-car-header row">
+        <h1 class="empty-car-h1">Garage is empty, consider adding a car!</h1>
         {% endfor %}
     </div>
-</main>
+
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto mt-5">
+                <a class="add-car-link px-5" href="{% url 'add_car'%}">Add a car</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center"> <!-- Centers items if fewer cars exist -->
+            {% for car in cars %}
+            <div class="col-lg-4 col-md-6 col-sm-8 col-10 mb-4"> <!-- Auto adjusts for different screens -->
+                <div class="card custom-card h-100"> <!-- Ensures uniform card height -->
+                    <img src="{{ car.picture }}" class="card-img-top" alt="{{ car.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">Car Name:</h5>
+                        {{ car.name }}
+                        <p class="card-text">Co-driven:</p>
+                        {{ car.co_driven }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
+
+</section>
 {% endblock %}

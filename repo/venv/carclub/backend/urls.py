@@ -21,6 +21,9 @@ urlpatterns = [
     path("garage/", views.garage_view, name="garage"),
     path("garage/add_car", views.add_car_view, name="add_car"),
 
+    #statistic pathing
+    path("stats/", views.stats_view, name="stats"),
+
     #password reset pathing
     path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name = "password_reset_done.html"), name ='password_reset_done'),

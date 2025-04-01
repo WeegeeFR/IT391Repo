@@ -53,7 +53,7 @@ class Car(models.Model):
     car_id = models.IntegerField(primary_key=True)
     #car info
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    codriven = models.BooleanField(default=False)
+    codriven = models.BooleanField(null=True) #Allows true false and none
     name = models.CharField(max_length=100)
     brand = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
