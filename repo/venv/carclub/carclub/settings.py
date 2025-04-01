@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-gi#un(_+0j_0da31)kvf7fr1ko6yu0tawwk2pzeq#$vdo3scij
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['10.111.21.97', '127.0.0.1']
 
 # Application definition
 
@@ -129,14 +128,14 @@ USE_TZ = True
 
 
 # My comments below: this is to serve non-dynamic content like: css, javascript, images
-STATIC_URL = 'static/' # The URL path where static files will be served.
-STATICFILES_DIRS = [BASE_DIR / "carclub"] # Additional directories where Django will look for static files.
+STATIC_URL = '/static/' # The URL path where static files will be served.
+STATICFILES_DIRS = [BASE_DIR / "static"] # Additional directories where Django will look for static files.
 # My comment: In production, Django collects all static files into a single folder using static_root.
-STATIC_ROOT = BASE_DIR / "staticfiles" # This is where static files will be collected
+STATIC_ROOT = '/var/www/html/GetHubRepo/IT391Repo/repo/venv/carclub/backend/static'
 
 #media folder settings for pictures and stuff, setting a default folder for it
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/var/www/html/GetHubRepo/IT391Repo/repo/venv/carclub/media'
 
 #all the settings for email sending
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
