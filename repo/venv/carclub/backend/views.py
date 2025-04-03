@@ -133,10 +133,14 @@ def stats_view(request):
         name = request.POST.get('name')
         car_make = request.POST.get('car_make')
         link_dictionary = get_links_from_string(selected_event)
-        first_day_records = get_raw_pax_records(link_dictionary[selected_setting][0], name, car_make, selected_setting)
+        first_day_records = []
         second_day_records = []
-        if len(link_dictionary[selected_setting]) > 1:
-            second_day_records = get_raw_pax_records(link_dictionary[selected_setting][1], name, car_make, selected_setting)
+        if selected_setting == "Raw" or "Pax":
+            first_day_records = get_raw_pax_records(link_dictionary[selected_setting][0], name, car_make, selected_setting)
+            if len(link_dictionary[selected_setting]) > 1:
+                second_day_records = get_raw_pax_records(link_dictionary[selected_setting][1], name, car_make, selected_setting)
+        elif selected_setting == "Final":
+            print("yipeee")
         return render(request, 'stats/stats.html', {'options_dict': scrape_season_events(), 'first_records': first_day_records, 'second_records': second_day_records,'show_dropdown': True, 'setting': selected_setting})
 
     #Default case when the page is first loaded
