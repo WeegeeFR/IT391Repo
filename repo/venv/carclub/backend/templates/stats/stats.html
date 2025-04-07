@@ -1,45 +1,36 @@
+{% extends 'base.html' %} {% block tittle %}Stats Page{% endblock %}
+
 {% block content %}
 
-<h1>Statistics</h1>
-<script type="text/javascript">
-    function disableButtons() {
-        //Get all buttons with the class 'submitBtn'
-        var submitButtons = document.querySelectorAll('.btn');
-        var loadingLabels = document.querySelectorAll('.loading');
-        
-        //Loop through each button and disable it
-        submitButtons.forEach(function(button) {
-            button.style.display = "none";
-        });
-        loadingLabels.forEach(function(label) {
-            label.style.display = "block";
-        });
-    }
-</script>
-<style>
-    /* The label with the class 'loading' will be hidden initially */
-    .loading {
-        display: none;  /* Initially hidden */
-    }
-</style>
+<main class="stats-section">
+    <h1 class="stats-title">Statistics</h1>
 
-<!-- First form will scrape the website for past events and links to generate options for dropdown -->
-{% if not show_dropdown%}
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn" name="get_events" onclick="disableButtons()">Get Past Events </button>
-    <label class="loading" >Loading Statistics...</label>
-</form>
-{% endif %}
+    <style>
+        /* The label with the class 'loading' will be hidden initially */
+        .loading {
+            display: none;
+            /* Initially hidden */
+        }
+    </style>
 
-{% if show_dropdown %}
+    <!-- First form will scrape the website for past events and links to generate options for dropdown -->
+    {% if not show_dropdown%}
+    <form method="post" class="d-flex justify-content-center">
+        {% csrf_token %}
+        <button type="submit" class="btn get-events-btn" name="get_events" onclick="disableButtons()">Get Past Events
+        </button>
+        <label class="loading">Loading Statistics...</label>
+    </form>
+    {% endif %}
+
+    {% if show_dropdown %}
     <!-- Dropdown with checkbox's to get a record from a event-->
-    <form method="post">
+    <form method="post" class="container">
         {% csrf_token %}
         <label for="dropdown">Choose a event to get records from:</label>
         <select id="dropdown" name="dropdown">
             {% for label, value in options_dict.items %}
-                <option value="{{ value }}">{{ label }}</option>
+            <option value="{{ value }}">{{ label }}</option>
             {% endfor %}
         </select>
         <br><br>
@@ -54,141 +45,142 @@
         <label for="namefield">Search by Name</label>
         <input type="text" id="name" name="name" value="{{ name }}" placeholder="Name">
         <br><br>
-        
+
         <label for="carfield">Search by Car Make:</label>
         <input type="text" id="car_make" name="car_make" value="{{ car_make }}" placeholder="Car Make">
         <br><br>
-        
+
         <!-- Second Button: Call function with the selected value -->
-        <label class="loading" >Loading Statistics...</label>
+        <label class="loading">Loading Statistics...</label>
         <button type="submit" class="btn" name="selected_event" onclick="disableButtons()">Get Stats</button>
     </form>
 
     <!--Listing the records-->
     <!--Pax-->
     {% if setting == "Pax" and first_records|length > 0 %}
-        {% if second_records|length > 0 %}
-            <label for="record_label">First Day:</label>
-        {% endif %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Pax Pos.</th>
-                    <th>Pos.</th>
-                    <th>Class</th>
-                    <th>#</th>
-                    <th>Driver</th>
-                    <th>Car Make</th>
-                    <th>Total</th>
-                    <th>Factor</th>
-                    <th>Pax Time</th>
-                    <th>Diff</th>
-                    <th>From 1st</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in first_records %}
-                <tr>
-                    <!-- Iterate through each item in the row (this is the array or tuple) -->
-                    {% for item in row %}
-                        <td>{{ item }}</td>
-                    {% endfor %}
-                </tr>
+    {% if second_records|length > 0 %}
+    <label for="record_label">First Day:</label>
+    {% endif %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pax Pos.</th>
+                <th>Pos.</th>
+                <th>Class</th>
+                <th>#</th>
+                <th>Driver</th>
+                <th>Car Make</th>
+                <th>Total</th>
+                <th>Factor</th>
+                <th>Pax Time</th>
+                <th>Diff</th>
+                <th>From 1st</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in first_records %}
+            <tr>
+                <!-- Iterate through each item in the row (this is the array or tuple) -->
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
+        </tbody>
+    </table>
     {% endif %}
     {% if setting == "Pax" and second_records|length > 0 %}
-        <label for="record_label">Second Day:</label>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Pax Pos.</th>
-                    <th>Pos.</th>
-                    <th>Class</th>
-                    <th>#</th>
-                    <th>Driver</th>
-                    <th>Car Make</th>
-                    <th>Total</th>
-                    <th>Factor</th>
-                    <th>Pax Time</th>
-                    <th>Diff</th>
-                    <th>From 1st</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in second_records %}
-                <tr>
-                    <!-- Iterate through each item in the row (this is the array or tuple) -->
-                    {% for item in row %}
-                        <td>{{ item }}</td>
-                    {% endfor %}
-                </tr>
+    <label for="record_label">Second Day:</label>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pax Pos.</th>
+                <th>Pos.</th>
+                <th>Class</th>
+                <th>#</th>
+                <th>Driver</th>
+                <th>Car Make</th>
+                <th>Total</th>
+                <th>Factor</th>
+                <th>Pax Time</th>
+                <th>Diff</th>
+                <th>From 1st</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in second_records %}
+            <tr>
+                <!-- Iterate through each item in the row (this is the array or tuple) -->
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
+        </tbody>
+    </table>
     {% endif %}
 
     <!--Raw Records-->
     {% if setting == "Raw" and first_records|length > 0 %}
-        {% if second_records|length > 0 %}
-            <label for="record_label">First Day:</label>
-        {% endif %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Row #</th>
-                    <th>Pos.</th>
-                    <th>Class</th>
-                    <th>#</th>
-                    <th>Driver</th>
-                    <th>Car Make</th>
-                    <th>Raw Time</th>
-                    <th>Diff</th>
-                    <th>From 1st</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in second_records %}
-                <tr>
-                    <!-- Iterate through each item in the row (this is the array or tuple) -->
-                    {% for item in row %}
-                        <td>{{ item }}</td>
-                    {% endfor %}
-                </tr>
+    {% if second_records|length > 0 %}
+    <label for="record_label">First Day:</label>
+    {% endif %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Row #</th>
+                <th>Pos.</th>
+                <th>Class</th>
+                <th>#</th>
+                <th>Driver</th>
+                <th>Car Make</th>
+                <th>Raw Time</th>
+                <th>Diff</th>
+                <th>From 1st</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in second_records %}
+            <tr>
+                <!-- Iterate through each item in the row (this is the array or tuple) -->
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
+        </tbody>
+    </table>
     {% endif %}
 
     {% if setting == "Raw" and second_records|length > 0 %}
-        <label for="record_label">Second Day:</label>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Row #</th>
-                    <th>Pos.</th>
-                    <th>Class</th>
-                    <th>#</th>
-                    <th>Driver</th>
-                    <th>Car Make</th>
-                    <th>Raw Time</th>
-                    <th>Diff</th>
-                    <th>From 1st</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in second_records %}
-                <tr>
-                    <!-- Iterate through each item in the row (this is the array or tuple) -->
-                    {% for item in row %}
-                        <td>{{ item }}</td>
-                    {% endfor %}
-                </tr>
+    <label for="record_label">Second Day:</label>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Row #</th>
+                <th>Pos.</th>
+                <th>Class</th>
+                <th>#</th>
+                <th>Driver</th>
+                <th>Car Make</th>
+                <th>Raw Time</th>
+                <th>Diff</th>
+                <th>From 1st</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in second_records %}
+            <tr>
+                <!-- Iterate through each item in the row (this is the array or tuple) -->
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+        </tbody>
+    </table>
+</main>
+{% endif %}
 {% endif %}
 
 {% endblock %}

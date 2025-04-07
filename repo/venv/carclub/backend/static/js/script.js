@@ -28,6 +28,11 @@ $(document).ready(function () {
         $(".alert").fadeOut("slow");
     }, 5000); // 5 seconds
 
+    // This is for the butons on the stats page
+    $(".btn").click(function () {
+        $(".btn").hide();
+        $(".loading").show();
+    });
 
 
 });

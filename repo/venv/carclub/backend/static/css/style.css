@@ -278,7 +278,7 @@ nav.active {
 .profile-img-container {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 250px;
     aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
@@ -288,8 +288,8 @@ nav.active {
 .profile-img {
     width: 100%;
     height: 100%;
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 250px;
+    max-height: 250px;
     border-radius: 50%;
     border: 2px solid #ddd;
     object-fit: cover;

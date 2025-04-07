@@ -31,16 +31,11 @@
     padding: 12px 0 12px 0;
     background: linear-gradient(135deg, var(--blue), var(--darkblue));
     color: var(--white-color);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: clamp(1.8rem, 8vw, 3rem);
     text-decoration: none;
-    transition: background 0.3s ease;
     width: min(550px, 90%);
-}
-
-.add-car-link:hover {
-    border: 1.8px solid var(--white-color);
 }
 
 .empty-car-h1 {

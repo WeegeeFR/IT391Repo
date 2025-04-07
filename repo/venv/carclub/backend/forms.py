@@ -118,3 +118,5 @@ class TireCreationForm(forms.ModelForm):
             'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
             'manufacture_date': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
         }
+
+        
