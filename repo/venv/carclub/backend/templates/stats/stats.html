@@ -49,6 +49,9 @@
         </label>
         <label for="pax">
             <input type="radio" name=setting id="pax" value="Pax"> Pax
+        <label for="raw">
+        </label>
+            <input type="radio" name=setting id="final" value="Final"> Final
         </label><br>
 
         <label for="namefield">Search by Name</label>
@@ -94,7 +97,7 @@
                         <td>{{ item }}</td>
                     {% endfor %}
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}
@@ -124,7 +127,7 @@
                         <td>{{ item }}</td>
                     {% endfor %}
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}
@@ -149,14 +152,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in second_records %}
+                {% for row in first_records %}
                 <tr>
                     <!-- Iterate through each item in the row (this is the array or tuple) -->
                     {% for item in row %}
                         <td>{{ item }}</td>
                     {% endfor %}
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}
@@ -185,7 +188,64 @@
                         <td>{{ item }}</td>
                     {% endfor %}
                 </tr>
-            {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <!--Final Records-->
+    {% if setting == "Final" and first_records|length > 0 %}
+        {% if second_records|length > 0 %}
+            <label for="record_label">First Day:</label>
+        {% endif %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colspan="5">Participant Info</th>
+                    <th>Car Color</th>
+                    {% for item in first_runs %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                    <th>Total</th>
+                    <th>Diff.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in first_records %}
+                <tr>
+                    <!-- Iterate through each item in the row (this is the array or tuple) -->
+                    {% for item in row %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if setting == "Final" and second_records|length > 0 %}
+        <label for="record_label">Second Day:</label>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colspan="5">Participant Info</th>
+                    <th>Car Color</th>
+                    {% for item in second_runs %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                    <th>Total</th>
+                    <th>Diff.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in second_records %}
+                <tr>
+                    <!-- Iterate through each item in the row (this is the array or tuple) -->
+                    {% for item in row %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}

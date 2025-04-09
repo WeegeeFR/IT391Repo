@@ -90,14 +90,34 @@ class ProfileUpdateForm(UserChangeForm):
 class CarCreationForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ['owner', 'codriven', 'brand', 'picture', 'free_form_text']
+        fields = ['owner_name', 'codriven', 'brand', 'picture', 'free_form_text']
         widgets = {
-            'owner': forms.Select(attrs={'class': 'form-select'}),  # Correct dropdown for ForeignKey
+            'owner_name': forms.TextInput(attrs={'class': 'form-control', 'maxlength': 100}),
             'codriven': forms.NullBooleanSelect(attrs={'class': 'form-select'}),  # Works for nullable boolean
             'brand': forms.TextInput(attrs={'class': 'form-control', 'maxlength': 100}),
             'picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'free_form_text': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'maxlength': 500})
         }
+    #settings to make some fields required
+    owner_name = forms.CharField(max_length=100, required=True, error_messages={'required': 'Please enter the owner\'s name.'})
+    codriven = forms.NullBooleanField(required=True, error_messages={'required': 'Please select whether the car is co-driven.'})
+    brand = forms.CharField(max_length=100, required=True, error_messages={'required': 'Please enter the brand of the car.'})
+
+    def save(self, commit=True):
+        #Get the form data (cleaned data)
+        car_instance = super().save(commit=False)
+        # You can also modify other fields like setting default values
+        if car_instance.codriven is None:
+            car_instance.codriven = False  # Set a default value for codriven if None
+        #Set the owner of the car to the user and save if they exist
+        user = self.initial.get('user')
+        if commit and user:
+            car_instance.owner = user
+            #save after this
+            car_instance.save()
+        elif not user:
+            raise ValidationError("Owner is required for the car.")
+        return car_instance
 
 
 class TireCreationForm(forms.ModelForm):

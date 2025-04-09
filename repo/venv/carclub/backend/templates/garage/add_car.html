@@ -2,7 +2,7 @@
 {% block content %}
 <section class="add-car-section">
     <!-- Main Form -->
-    <form method="POST" class="car-form-header">
+    <form method="POST" enctype="multipart/form-data" class="car-form-header">
         {% csrf_token %}
         <div class="container car-form">
             {{ car_form.as_p }}

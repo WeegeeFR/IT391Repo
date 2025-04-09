@@ -37,12 +37,16 @@
             {% for car in cars %}
             <div class="col-lg-4 col-md-6 col-sm-8 col-10 mb-4"> <!-- Auto adjusts for different screens -->
                 <div class="card custom-card h-100"> <!-- Ensures uniform card height -->
-                    <img src="{{ car.picture }}" class="card-img-top" alt="{{ car.name }}">
+                    {% if car.picture %}
+                        <img src="{{ car.picture.url }}" class="card-img-top" alt="{{ car.owner_name }}">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}default_pictures/no_image.jpg" class="card-img-top" alt="No Image Available">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Car Name:</h5>
-                        {{ car.name }}
+                        <h5 class="card-title">Owner Name:</h5>
+                        {{ car.owner_name }}
                         <p class="card-text">Co-driven:</p>
-                        {{ car.co_driven }}
+                        {{ car.codriven }}
                     </div>
                 </div>
             </div>

@@ -51,26 +51,28 @@ class User(AbstractUser):
 class Car(models.Model):
     #basic identifier info
     car_id = models.IntegerField(primary_key=True)
+    #this field is badly named, basically just there for foreign key stuff
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    
     #car info
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    codriven = models.BooleanField(null=True) #Allows true false and none
-    name = models.CharField(max_length=100)
-    brand = models.CharField(max_length=100)
+    owner_name = models.CharField(max_length=100, null=True, blank=True)
+    codriven = models.BooleanField(default=False, null=True, blank=True)
+    brand = models.CharField(max_length=100, null=True)
     picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
     #Tire Id fields for the car
-    left_front_tire = models.IntegerField(null=True)
-    left_back_tire = models.IntegerField(null=True)
-    right_front_tire = models.IntegerField(null=True)
-    right_back_tire = models.IntegerField(null=True)
+    left_front_tire = models.IntegerField(null=True, blank=True)
+    left_back_tire = models.IntegerField(null=True, blank=True)
+    right_front_tire = models.IntegerField(null=True, blank=True)
+    right_back_tire = models.IntegerField(null=True, blank=True)
 
     #extra fields for functionality
-    favorite_car = models.BooleanField(default=False)
+    favorite_car = models.BooleanField(default=False, blank=True)
 
-    free_form_text = models.CharField(max_length=500)
+    free_form_text = models.CharField(max_length=500, null=True)
 
     #to string function
     def __str__(self):
-        return self.name
+        return self.owner_name
 
 #tire model for database
 class Tire(models.Model):
