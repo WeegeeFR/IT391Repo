@@ -50,7 +50,7 @@ def scrape_season_events():
     #return scraped data, key being the name and date of event as a string for dropdown, value being the links 
     return scraped_data
 
-def get_raw_pax_records(url, name, car_make, setting):
+def get_records(url, name, car_make, setting):
     scraped_data = []
     response = requests.get(url)
     if response.status_code != 200:
@@ -60,8 +60,11 @@ def get_raw_pax_records(url, name, car_make, setting):
 
      #Find all the <tbody> tag
     t_tags = soup.find_all('tbody')
-    #get the one we need(2nd)
+    #if pax or raw, we need the 2nd table
     table = t_tags[1]
+    #if final, we need the 3rd table
+    if setting == "Final":
+        table = t_tags[2]
     #before doing anything, check if the name or car_make provided is in it
     found_valid_record = False
     fixed_name = name.strip().lower()
@@ -89,7 +92,16 @@ def get_raw_pax_records(url, name, car_make, setting):
             if in_table:
                 output_array = []
                 for td in tr.find_all('td'):
-                    output_array.append(td.get_text(strip=True))
+                    #if pax or raw, append to table
+                    current_text = td.get_text(strip=True)
+                    if setting == "Pax" or setting == "Raw":
+                        output_array.append(td.get_text(strip=True))
+                    #if final, check if there's any runs that weren't done, set it to N/A for convenience
+                    elif setting == "Final":
+                        if len(current_text) > 0:
+                            output_array.append(current_text)
+                        else:
+                            output_array.append('N/A')
                 scraped_data.append(output_array)
     return scraped_data
 
@@ -130,3 +142,5 @@ def get_links_from_string(returned_string):
         final_dictionary[key] = key_array
     #return dictionary
     return final_dictionary
+
+print(get_records('https://ccsportscarclub.org/files/2023/03/lets-get-it-started-xi-2023-03-25_fin.htm', 'dean', '', 'Final'))

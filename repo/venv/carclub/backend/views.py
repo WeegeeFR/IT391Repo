@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, TireCreationForm
 from .models import Car, Tire
-from .handlers import scrape_season_events, get_raw_pax_records, get_links_from_string
+from .handlers import scrape_season_events, get_records, get_links_from_string
 
 
 # Create your views here.
@@ -79,41 +79,23 @@ def garage_view(request):
 
 @login_required
 def add_car_view(request):
-    #create forms, parameter in the form used to save data if the forms invalid for any reasons
-    car_form = CarCreationForm(request.POST or None)
-    tire_forms = [TireCreationForm(request.POST or None) for number in range(4)]
-    user = request.user
     if request.method == "POST":
         print("post method")
+        car_form = CarCreationForm(request.POST, request.FILES, initial={'user': request.user})
         if car_form.is_valid():
-            print('car is valid')
             #get newly added car
-            added_car = car_form.save(commit=False)
-            valid_tires_id = []
-            valid_form_numbers = []
-            form_dict = {}
-            #go through each tire form, check if valid, get the tire_id of the form and the form number
-            for i in range(len(tire_forms)):
-                if tire_forms[i].is_valid():
-                    current_tire = tire_forms[i].save()
-                    form_dict[i] = current_tire.tire_id
-            #go through valid form numbers, assign the tire id to the proper field in the added car object. 
-            if form_dict[0]:
-                added_car.left_front_tire = form_dict.get(0)
-            if form_dict[1]:
-                added_car.left_back_tire = form_dict.get(1)
-            if form_dict[2]:
-                added_car.right_front_tire = form_dict.get(2)
-            if form_dict[3]:
-                added_car.right_back_tire = form_dict.get(3)
+            car_form.save()
             #return to the garage with a message saying it newly added a car
             messages.success(request, "You have successfully added a vehicle!")
             return redirect('garage')
         else:
+            print(car_form.errors)
             messages.error(request, "There was a problem creating the vehicle, please check the form for errors")
+            car_form = CarCreationForm()
+    else:
+        car_form = CarCreationForm()
     return render(request, 'garage/add_car.html', {
         'car_form': car_form,
-        'tire_forms': tire_forms
     })
 
 #Statistic page views
@@ -133,11 +115,30 @@ def stats_view(request):
         name = request.POST.get('name')
         car_make = request.POST.get('car_make')
         link_dictionary = get_links_from_string(selected_event)
-        first_day_records = get_raw_pax_records(link_dictionary[selected_setting][0], name, car_make, selected_setting)
+        first_day_records = []
         second_day_records = []
+        first_day_records = get_records(link_dictionary[selected_setting][0], name, car_make, selected_setting)
         if len(link_dictionary[selected_setting]) > 1:
-            second_day_records = get_raw_pax_records(link_dictionary[selected_setting][1], name, car_make, selected_setting)
-        return render(request, 'stats/stats.html', {'options_dict': scrape_season_events(), 'first_records': first_day_records, 'second_records': second_day_records,'show_dropdown': True, 'setting': selected_setting})
+            second_day_records = get_records(link_dictionary[selected_setting][1], name, car_make, selected_setting)
+
+        #deal with adjusting table for amount of runs for html to display if the selected setting is 'final'
+        first_day_runs = []
+        second_day_runs = []
+        if selected_setting == "Final":
+            #if there's any for each day records, get how many there are and record it
+            if len(first_day_records) > 0:
+                for i in range(0, len(first_day_records[0][6:-2])):
+                    current_run = "Run " + str(i+1)
+                    first_day_runs.append(current_run)
+            if len(second_day_records) > 0:
+                for i in range(0, len(second_day_records[0][6:-2])):
+                    current_run = "Run " + str(i+1)
+                    second_day_runs.append(current_run)
+        #return all the data
+        return render(request, 'stats/stats.html', {'options_dict': scrape_season_events(), 
+                                                    'first_records': first_day_records, 'second_records': second_day_records,
+                                                    'show_dropdown': True, 'setting': selected_setting, 
+                                                    'first_runs': first_day_runs, 'second_runs': second_day_runs})
 
     #Default case when the page is first loaded
     return render(request, 'stats/stats.html', {'show_dropdown': False})
