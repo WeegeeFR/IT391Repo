@@ -232,6 +232,7 @@ nav.active {
     display: flex;
     flex-direction: column;
     background: var(--white-color);
+    max-height: 80vh;
     min-height: auto;
     max-width: 90%;
     border-radius: 12px;
@@ -254,6 +255,41 @@ nav.active {
     padding: .5rem;
     padding: 0;
     margin: 15px 15px;
+}
+
+.input-group-register {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group-register label {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+    font-size: clamp(.8rem, 8vw, 1.6rem);
+    margin-bottom: 5px;
+    color: black;
+}
+
+.input-group-register label i {
+    margin-right: 8px;
+    font-size: clamp(1.6rem, 8vw, 3rem);
+    color: black;
+}
+
+.register-form-control {
+    width: 100%;
+    padding: clamp(1rem, 3vw, 1.8rem);
+    background: whitesmoke;
+    border: solid whitesmoke;
+    border-radius: 8px !important;
+    font-size: clamp(.5rem, 8vw, 1.6rem);
+}
+
+.register-form-control:focus {
+    border-color: var(--blue);
+    border-width: .2rem;
+    outline: none;
 }
 
 /* Profile Section Styling Below */
@@ -439,13 +475,48 @@ nav.active {
 
 /* Further appereance for forms above */
 
-@media (max-height: 790px) {
-
+@media (max-height: 660px) {
     .register-container {
-        max-height: 80vh;
         overflow-y: auto;
-        box-shadow: none;
+    }
+}
+
+@media (max-height: 880px) {
+    .register-container {
+        height: 550px;
+        width: 350px;
     }
 
+    .input-group-register {
+        margin-bottom: 12px;
+        text-align: left;
+    }
 
+    .input-group-register label {
+        font-weight: 100;
+        font-size: clamp(.8rem, 8vw, 1.6rem);
+        margin-bottom: 5px;
+        color: black;
+    }
+
+    .input-group-register label i {
+        margin-right: 8px;
+        font-size: clamp(1.6rem, 8vw, 3rem);
+        color: black;
+    }
+
+    .register-form-control {
+        height: 40px;
+    }
+
+    .register-form-control:focus {
+        border-color: var(--blue);
+        border-width: .2rem;
+        outline: none;
+    }
+
+    .register-btn {
+        height: 40px;
+        padding: 0 35px 0 35px;
+    }
 }

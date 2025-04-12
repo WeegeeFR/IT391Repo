@@ -25,10 +25,10 @@ class LoginForm(AuthenticationForm):
 
 #inherits from the base user creation form, just customizing it here
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'class': 'login-form-control', 'placeholder': 'Enter Username'}))
-    email = forms.EmailField(max_length=255, required=True, widget=forms.EmailInput(attrs={'class': 'login-form-control', 'placeholder': 'Enter Email'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'login-form-control', 'placeholder': 'Enter Password'}), label="Password")
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'login-form-control', 'placeholder': 'Confirm Password'}), label="Confirm Password")
+    username = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'class': 'register-form-control', 'placeholder': 'Enter Username'}))
+    email = forms.EmailField(max_length=255, required=True, widget=forms.EmailInput(attrs={'class': 'register-form-control', 'placeholder': 'Enter Email'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'register-form-control', 'placeholder': 'Enter Password'}), label="Password")
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'register-form-control', 'placeholder': 'Confirm Password'}), label="Confirm Password")
 
     # Custom validation for password matching
     def clean_password2(self):
