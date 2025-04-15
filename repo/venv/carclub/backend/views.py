@@ -98,6 +98,31 @@ def add_car_view(request):
         'car_form': car_form,
     })
 
+@login_required
+def show_car_view(request, car_id):
+    return render(request, 'garage/show_car.html', {'car': None})
+
+@login_required
+def add_tires_view(request):
+    if request.method == "POST":
+        print("post method")
+        car_form = CarCreationForm(request.POST, request.FILES, initial={'user': request.user})
+        if car_form.is_valid():
+            #get newly added car
+            car_form.save()
+            #return to the garage with a message saying it newly added a car
+            messages.success(request, "You have successfully added a vehicle!")
+            return redirect('garage')
+        else:
+            print(car_form.errors)
+            messages.error(request, "There was a problem creating the vehicle, please check the form for errors")
+            car_form = CarCreationForm()
+    else:
+        car_form = CarCreationForm()
+    return render(request, 'garage/add_car.html', {
+        'car_form': car_form,
+    })
+
 #Statistic page views
 @login_required
 def stats_view(request):

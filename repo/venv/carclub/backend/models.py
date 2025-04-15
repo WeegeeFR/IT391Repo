@@ -88,6 +88,7 @@ class Tire(models.Model):
     tire_pressure = models.FloatField(null=True)
     tread_wear = models.CharField(max_length=255, null=True)
     highway_miles = models.IntegerField(null=True)
+    weather_when_used = models.CharField(max_length=100, null=True)
 
     #manufacturer info
     manufacturer_link = models.CharField(max_length=500, null=True)
