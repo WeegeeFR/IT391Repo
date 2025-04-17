@@ -216,5 +216,3 @@ def decode_weather_code(weather_code):
     }
     
     return weather_conditions.get(weather_code, "Unknown weather")
-
-print(get_weather('2025-04-15'))
