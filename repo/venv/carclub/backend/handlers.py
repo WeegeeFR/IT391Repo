@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import datetime
+import openmeteo_requests
 
 #base url to results page
 results_url = "https://ccsportscarclub.org/autocross/schedule/pastresults/2023-autocross-results/"
@@ -143,4 +145,76 @@ def get_links_from_string(returned_string):
     #return dictionary
     return final_dictionary
 
-print(get_records('https://ccsportscarclub.org/files/2023/03/lets-get-it-started-xi-2023-03-25_fin.htm', 'dean', '', 'Final'))
+def get_weather(given_date):
+    #default case incase it isnt found
+    weather_condition = "N/A"
+    #latitude and longitude for rantoul
+    lat = 40.294190
+    lon = -88.148880
+    #strip date and convert to timestamp, which openmeteo will take
+    date_obj = datetime.striptime(given_date, "%Y-%m-%d")
+    timestamp = int(date_obj.timestamp())
+
+    #start working with api
+    client = openmeteo_requests.OpenMeteo()
+    #make a request to the client
+    response = client.archive(
+        latitude=lat, 
+        longitude=lon,
+        start_date=given_date,
+        end_date=given_date,
+        temperature_2m_max=True,  # Get max temperature
+        temperature_2m_min=True,  # Get min temperature
+        precipitation_sum=True,  # Get total precipitation for the day
+        weathercode=True         # Get weather conditions (rainy, sunny, etc.)
+    )
+    #check if request went through
+    if response.status_code == 200:
+        data = response.json()
+        if 'daily' in data:
+            # Extract weather information
+            print(data['daily'])
+            daily_data = data['daily'][0]  # First entry for the specific day
+            weather_code = daily_data['weathercode']
+            
+            # Decode weather condition from the weathercode
+            weather_condition = decode_weather_code(weather_code)
+
+    return weather_condition
+
+#Decode the weather code to human-readable condition(certainly didnt chatgpt this cause lazy)
+def decode_weather_code(weather_code):
+    weather_conditions = {
+        0: 'Clear sky',
+        1: 'Mainly clear',
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Fog',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Drizzle',
+        55: 'Heavy drizzle',
+        56: 'Light freezing drizzle',
+        57: 'Freezing drizzle',
+        61: 'Light rain',
+        63: 'Rain',
+        65: 'Heavy rain',
+        66: 'Light freezing rain',
+        67: 'Freezing rain',
+        71: 'Light snow fall',
+        73: 'Snow fall',
+        75: 'Heavy snow fall',
+        77: 'Snow grains',
+        80: 'Light rain showers',
+        81: 'Rain showers',
+        82: 'Heavy rain showers',
+        85: 'Light snow showers',
+        86: 'Heavy snow showers',
+        95: 'Thunderstorms',
+        96: 'Thunderstorms with light hail',
+        99: 'Thunderstorms with heavy hail'
+    }
+    
+    return weather_conditions.get(weather_code, "Unknown weather")
+
+print(get_weather('2025-04-15'))

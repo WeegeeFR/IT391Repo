@@ -3,3 +3,4 @@ Pillow==11.1.0
 beautifulsoup4
 requests
 lxml
+openmeteo-requests
