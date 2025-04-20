@@ -1,4 +1,69 @@
-<h1>{{ car.name }}</h1>
-<img src="{{ car.image.url }}" alt="{{ car.name }}">
-<p>{{ car.description }}</p>
-<a href="{% url 'garage' %}">Back to garage</a>
+<!-- templates/cars/car_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit {{ car.brand }}</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+        }
+        .left, .right {
+            flex: 1;
+            padding: 1rem;
+        }
+        .right {
+            text-align: center;
+            border-left: 1px solid #ccc;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- LEFT: Car edit form -->
+        <div class="left">
+            <h2>Edit Car - {{ car.brand }}</h2>
+            {% if car.picture %}
+                <h4>Current Picture:</h4>
+                <img src="{{ car.picture.url }}" alt="Car Picture" width="300">
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- RIGHT: Navigation buttons -->
+        <div class="right">
+            <a href="{% url 'garage' %}" class="button-link">Back to Garage</a>
+            <br>
+            <a href="{% url 'add_tires' car.car_id%}" class="button-link">Add a Tire set</a>
+            <br>
+            {% for tireset in tiresets %}
+                <div class="tireset-item" style="margin-bottom: 10px;">
+                    <span><strong>Tireset Date:</strong> {{ tireset.date_driven }}</span> |
+                    <span><strong>Weather:</strong> {{ tireset.weather_when_used }}</span>
+                </div>
+            {% empty %}
+                <li>No tiresets available for this vehicle.</li>
+            {% endfor %}
+            <!-- You could add more buttons here -->
+        </div>
+    </div>
+</body>
+</html>

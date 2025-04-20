@@ -50,7 +50,7 @@ class User(AbstractUser):
 #Car model
 class Car(models.Model):
     #basic identifier info
-    car_id = models.IntegerField(primary_key=True)
+    car_id = models.AutoField(primary_key=True)
     #this field is badly named, basically just there for foreign key stuff
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     
@@ -59,12 +59,6 @@ class Car(models.Model):
     codriven = models.BooleanField(default=False, null=True, blank=True)
     brand = models.CharField(max_length=100, null=True)
     picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
-    #Tire Id fields for the car
-    left_front_tire = models.IntegerField(null=True, blank=True)
-    left_back_tire = models.IntegerField(null=True, blank=True)
-    right_front_tire = models.IntegerField(null=True, blank=True)
-    right_back_tire = models.IntegerField(null=True, blank=True)
-
     #extra fields for functionality
     favorite_car = models.BooleanField(default=False, blank=True)
 
@@ -74,21 +68,28 @@ class Car(models.Model):
     def __str__(self):
         return self.owner_name
 
+#Tireset model to hold tires
+class Tireset(models.Model):
+    #primary key
+    tireset_id = models.AutoField(primary_key=True)
+    #foreign key to attach tires to the vehicle
+    tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE)
+    #extra info that is nice to have on the tires
+    date_driven =  models.DateField(null=True)
+    highway_miles = models.IntegerField(null=True)
+    weather_when_used = models.CharField(max_length=100, null=True, blank=True)
+
 #tire model for database
 class Tire(models.Model):
     #identifier info
-    tire_id = models.IntegerField(primary_key=True)
-    #cascade to handle if car is deleted, tires will also be deleted
-    tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE, null=True)
-    date_driven =  models.DateField(null=True)
-    tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
-
+    tire_id = models.AutoField(primary_key=True)
+    #cascade to handle if tireset is deleted, tires will also be deleted
+    tireset = models.ForeignKey(Tireset, on_delete=models.CASCADE, null=True)
     #information about tire
+    tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
     tire_brand = models.CharField(max_length=100, null=True)
     tire_pressure = models.FloatField(null=True)
     tread_wear = models.CharField(max_length=255, null=True)
-    highway_miles = models.IntegerField(null=True)
-    weather_when_used = models.CharField(max_length=100, null=True)
 
     #manufacturer info
     manufacturer_link = models.CharField(max_length=500, null=True)

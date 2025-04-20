@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import datetime
-import openmeteo_requests
+from datetime import datetime
 
 #base url to results page
 results_url = "https://ccsportscarclub.org/autocross/schedule/pastresults/2023-autocross-results/"
@@ -146,44 +145,44 @@ def get_links_from_string(returned_string):
     return final_dictionary
 
 def get_weather(given_date):
-    #default case incase it isnt found
-    weather_condition = "N/A"
+    url = "https://api.open-meteo.com/v1/forecast"
     #latitude and longitude for rantoul
     lat = 40.294190
     lon = -88.148880
-    #strip date and convert to timestamp, which openmeteo will take
-    date_obj = datetime.striptime(given_date, "%Y-%m-%d")
-    timestamp = int(date_obj.timestamp())
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": ["weathercode"],
+        "start_date": given_date,
+        "end_date": given_date,
+        "timezone": "auto"
+    }
 
-    #start working with api
-    client = openmeteo_requests.OpenMeteo()
-    #make a request to the client
-    response = client.archive(
-        latitude=lat, 
-        longitude=lon,
-        start_date=given_date,
-        end_date=given_date,
-        temperature_2m_max=True,  # Get max temperature
-        temperature_2m_min=True,  # Get min temperature
-        precipitation_sum=True,  # Get total precipitation for the day
-        weathercode=True         # Get weather conditions (rainy, sunny, etc.)
-    )
-    #check if request went through
-    if response.status_code == 200:
-        data = response.json()
-        if 'daily' in data:
-            # Extract weather information
-            print(data['daily'])
-            daily_data = data['daily'][0]  # First entry for the specific day
-            weather_code = daily_data['weathercode']
-            
-            # Decode weather condition from the weathercode
-            weather_condition = decode_weather_code(weather_code)
+    response = requests.get(url, params=params)
+    data = response.json()
 
-    return weather_condition
+    if "hourly" not in data:
+        print("No weather data found.")
+        return
+
+    #Get weather code and timestamp data
+    weather_codes = data["hourly"]["weathercode"]
+    times = data["hourly"]["time"]
+
+    #We'll get the most recent available hour starting from 10 oclock in the morning
+    current_hour_index = 10
+    for i in range(10, len(times)):
+        if times[i]:
+            current_hour_index = i
+            break
+    weather_code = weather_codes[current_hour_index]
+
+    #Translate code to description
+    weather_description = get_weather_from_code(weather_code)
+    return weather_description
 
 #Decode the weather code to human-readable condition(certainly didnt chatgpt this cause lazy)
-def decode_weather_code(weather_code):
+def get_weather_from_code(weather_code):
     weather_conditions = {
         0: 'Clear sky',
         1: 'Mainly clear',
