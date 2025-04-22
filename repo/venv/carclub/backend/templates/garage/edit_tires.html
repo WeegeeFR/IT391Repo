@@ -1,0 +1,62 @@
+{% block content %}
+<section class="add-car-section">
+    <!-- Main Form -->
+    <form method="POST" enctype="multipart/form-data" class="tireset-form-header">
+        {% csrf_token %}
+        <div class="container tireset-form">
+            {{ tireset_form.as_p }}
+        </div>
+        <div class="container tire-forms">
+            <div class="tire-form" id="form1" style="display:none;">
+                <h3>Left Front Tire</h3>
+                {{ tire_forms.0.as_p }} 
+            </div>
+
+            <div class="tire-form" id="form2" style="display:none;">
+                <h3>Left Back Tire</h3>
+                {{ tire_forms.1.as_p }} 
+            </div>
+
+            <div class="tire-form" id="form3" style="display:none;">
+                <h3>Right Front Tire</h3>
+                {{ tire_forms.2.as_p }} 
+            </div>
+
+            <div class="tire-form" id="form4" style="display:none;">
+                <h3>Right Back Tire</h3>
+                {{ tire_forms.3.as_p }}
+            </div>
+        </div>
+
+        <div class="container">
+            <button type="button" id="LeftFrontButton" onclick="showForm(1)" class="btn btn-secondary">Edit Left Front
+                Tire</button>
+            <button type="button" id="LeftBackButton" onclick="showForm(2)" class="btn btn-secondary">Edit Left Back
+                Tire</button>
+            <button type="button" id="RightFrontButton" onclick="showForm(3)" class="btn btn-secondary">Edit Right Front
+                Tire</button>
+            <button type="button" id="RightBackButton" onclick="showForm(4)" class="btn btn-secondary">Edit Right Back
+                Tire</button>
+        </div>
+        <div class="row create-tireset-container-btn">
+            <button type="submit">Finish Editing</button>
+        </div>
+    </form>
+    <!--Javascript to deal with the four tire buttons-->
+    <script>
+        // JavaScript to show/hide item forms when the buttons are clicked
+        function showForm(formNumber) {
+            var forms = document.querySelectorAll('.tire-form');
+            forms.forEach(function (form) {
+                form.style.display = 'none'; //hide every form
+            });
+            // Show the selected form
+            var selectedForm = document.getElementById('form' + formNumber);
+            if (selectedForm) {
+                selectedForm.style.display = 'block'; //show the selected form
+            }
+
+        }
+    </script>
+</section>
+{% endblock %}

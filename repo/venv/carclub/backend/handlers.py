@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 #base url to results page
 results_url = "https://ccsportscarclub.org/autocross/schedule/pastresults/2023-autocross-results/"
@@ -143,4 +144,74 @@ def get_links_from_string(returned_string):
     #return dictionary
     return final_dictionary
 
-print(get_records('https://ccsportscarclub.org/files/2023/03/lets-get-it-started-xi-2023-03-25_fin.htm', 'dean', '', 'Final'))
+def get_weather(given_date):
+    url = "https://api.open-meteo.com/v1/forecast"
+    #latitude and longitude for rantoul
+    lat = 40.294190
+    lon = -88.148880
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": ["weathercode"],
+        "start_date": given_date,
+        "end_date": given_date,
+        "timezone": "auto"
+    }
+
+    response = requests.get(url, params=params)
+    data = response.json()
+
+    if "hourly" not in data:
+        print("No weather data found.")
+        return
+
+    #Get weather code and timestamp data
+    weather_codes = data["hourly"]["weathercode"]
+    times = data["hourly"]["time"]
+
+    #We'll get the most recent available hour starting from 10 oclock in the morning
+    current_hour_index = 10
+    for i in range(10, len(times)):
+        if times[i]:
+            current_hour_index = i
+            break
+    weather_code = weather_codes[current_hour_index]
+
+    #Translate code to description
+    weather_description = get_weather_from_code(weather_code)
+    return weather_description
+
+#Decode the weather code to human-readable condition(certainly didnt chatgpt this cause lazy)
+def get_weather_from_code(weather_code):
+    weather_conditions = {
+        0: 'Clear sky',
+        1: 'Mainly clear',
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Fog',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Drizzle',
+        55: 'Heavy drizzle',
+        56: 'Light freezing drizzle',
+        57: 'Freezing drizzle',
+        61: 'Light rain',
+        63: 'Rain',
+        65: 'Heavy rain',
+        66: 'Light freezing rain',
+        67: 'Freezing rain',
+        71: 'Light snow fall',
+        73: 'Snow fall',
+        75: 'Heavy snow fall',
+        77: 'Snow grains',
+        80: 'Light rain showers',
+        81: 'Rain showers',
+        82: 'Heavy rain showers',
+        85: 'Light snow showers',
+        86: 'Heavy snow showers',
+        95: 'Thunderstorms',
+        96: 'Thunderstorms with light hail',
+        99: 'Thunderstorms with heavy hail'
+    }
+    
+    return weather_conditions.get(weather_code, "Unknown weather")
