@@ -22,6 +22,7 @@ urlpatterns = [
     path("garage/add_car", views.add_car_view, name="add_car"),
     path("garage/show_car/<int:car_id>", views.show_car_view, name="show_car"),
     path("garage/show_car/add_tires/<int:car_id>", views.add_tires_view, name="add_tires"),
+    path("garage/show_car/edit_tires/<int:tireset_id>", views.edit_tires_view, name="edit_tireset"),
 
     #statistic pathing
     path("stats/", views.stats_view, name="stats"),

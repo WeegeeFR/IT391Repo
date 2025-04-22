@@ -32,6 +32,18 @@
     </style>
 </head>
 <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <div class="container">
         <!-- LEFT: Car edit form -->
         <div class="left">
@@ -55,10 +67,12 @@
             <a href="{% url 'add_tires' car.car_id%}" class="button-link">Add a Tire set</a>
             <br>
             {% for tireset in tiresets %}
-                <div class="tireset-item" style="margin-bottom: 10px;">
-                    <span><strong>Tireset Date:</strong> {{ tireset.date_driven }}</span> |
-                    <span><strong>Weather:</strong> {{ tireset.weather_when_used }}</span>
-                </div>
+                <a href="{% url 'edit_tireset' tireset.tireset_id %}" style="text-decoration: none; color: inherit;">
+                    <div class="tireset-item" style="margin-bottom: 10px;">
+                        <span><strong>Tireset Date:</strong> {{ tireset.date_driven }}</span> |
+                        <span><strong>Weather:</strong> {{ tireset.weather_when_used }}</span>
+                    </div>
+                </a>
             {% empty %}
                 <li>No tiresets available for this vehicle.</li>
             {% endfor %}

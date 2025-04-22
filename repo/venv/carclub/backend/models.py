@@ -84,7 +84,7 @@ class Tire(models.Model):
     #identifier info
     tire_id = models.AutoField(primary_key=True)
     #cascade to handle if tireset is deleted, tires will also be deleted
-    tireset = models.ForeignKey(Tireset, on_delete=models.CASCADE, null=True)
+    tireset = models.ForeignKey(Tireset, on_delete=models.CASCADE, related_name='tires')
     #information about tire
     tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
     tire_brand = models.CharField(max_length=100, null=True)
@@ -92,6 +92,6 @@ class Tire(models.Model):
     tread_wear = models.CharField(max_length=255, null=True)
 
     #manufacturer info
-    manufacturer_link = models.CharField(max_length=500, null=True)
+    manufacturer_link = models.CharField(max_length=500, null=True, blank=True)
     manufacture_date = models.DateField(null=True)
     

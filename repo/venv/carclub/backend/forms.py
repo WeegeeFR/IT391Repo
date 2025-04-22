@@ -168,15 +168,35 @@ class TiresetCreationForm(forms.ModelForm):
             print("Saving Tireset:", tireset_instance.pk)
         return tireset_instance
 
+class TiresetEditForm(forms.ModelForm):
+    #define the car passed in to be used later in saving the object
+    class Meta:
+        model = Tireset
+        fields = ['date_driven', 'highway_miles', 'weather_when_used']
+        widgets = {
+            'date_driven': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
+            'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
+            'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear info'}),
+
+        }
+    def save(self, commit=True):
+        #Get the form data (cleaned data)
+        tireset_instance = super().save(commit=False)
+        #if date given, get weather for that date
+        #save car and return it
+        if commit:
+            tireset_instance.save()
+            print("Saving Tireset:", tireset_instance.pk)
+        return tireset_instance
 
 class TireCreationForm(forms.ModelForm):
     class Meta:
         model = Tire
-        fields = ['tire_picture', 'tire_pressure', 'tread_wear', 'manufacture_date']
+        fields = ['tire_picture', 'tire_pressure', 'tread_wear', 'manufacture_date', 'manufacturer_link']
         widgets = {
             'manufacture_date': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
             'tire_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'tire_pressure': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter tire pressure'}),
             'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear info'}),
-            #'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
+            'manufacturer_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter manufacturer link'}),
         }

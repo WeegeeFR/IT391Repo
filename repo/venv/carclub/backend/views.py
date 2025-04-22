@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib import messages
 
-from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, CarEditForm, TiresetCreationForm, TireCreationForm
+from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, CarEditForm, TiresetCreationForm, TireCreationForm, TiresetEditForm
 from .models import Car, Tire, Tireset
 from .handlers import scrape_season_events, get_records, get_links_from_string
 
@@ -136,7 +136,8 @@ def add_tires_view(request, car_id):
                 tire = form.save(commit=False)
                 tire.tireset = tireset
                 tire.save()
-
+            
+            messages.success(request, "You have successfully added a tireset to this vehicle!")
             return redirect('show_car', car_id=car.car_id)
 
     else:
@@ -153,40 +154,44 @@ def add_tires_view(request, car_id):
     return render(request, 'garage/add_tires.html', context)
 
 @login_required
-def edit_tires_view(request, car_id):
-    #get car from id
-    car = get_object_or_404(Car, car_id=car_id)
+def edit_tires_view(request, tireset_id):
+    #get car from tireset, and tireset from given id
+    tireset = get_object_or_404(Tireset, tireset_id=tireset_id)
+    car = tireset.tire_vehicle
     #Set prefixes for tire forms to match fields in template (not required if you're indexing)
     tire_prefixes = ['tire1', 'tire2', 'tire3', 'tire4']
+    #get all four tires
+    tires = list(tireset.tires.all())
 
     if request.method == 'POST':
-        #Main tire set form
-        tireset_form = TiresetCreationForm(request.POST, car=car)
+        #create form with existing tireset data
+        tireset_form = TiresetEditForm(request.POST, instance=tireset)
 
-        #Create tire forms with POST data
+        #go through each tire and make form with the current tire data
         tire_forms = [
-            TireCreationForm(request.POST, request.FILES, prefix=prefix) for prefix in tire_prefixes
+            TireCreationForm(request.POST, request.FILES, prefix=prefix, instance=tires[i])
+            for i, prefix in enumerate(tire_prefixes)
         ]
-
-        #Validate all
+        #check if everythings valid, then save the forms and redirect back
         if tireset_form.is_valid() and all(form.is_valid() for form in tire_forms):
-            tireset = tireset_form.save(commit=True)
-            for i, form in enumerate(tire_forms):
-                tire = form.save(commit=True)
+            tireset = tireset_form.save()
+            for form in tire_forms:
+                form.save()
+            messages.success(request, "Edited tireset successfully!")
             return redirect('show_car', car_id=car.car_id)
 
     else:
-        tireset_form = TiresetCreationForm(car=car)
+        tireset_form = TiresetEditForm(instance=tireset)
         tire_forms = [
-            TireCreationForm(prefix=prefix) for prefix in tire_prefixes
+            TireCreationForm(prefix=prefix, instance=tires[i])
+            for i, prefix in enumerate(tire_prefixes)
         ]
-
     context = {
         'car': car,
         'tireset_form': tireset_form,
         'tire_forms': tire_forms,
     }
-    return render(request, 'garage/add_tires.html', context)
+    return render(request, 'garage/edit_tires.html', context)
 
 #Statistic page views
 @login_required
