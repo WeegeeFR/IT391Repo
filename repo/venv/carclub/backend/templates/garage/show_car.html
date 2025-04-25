@@ -1,83 +1,151 @@
 <!-- templates/cars/car_detail.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit {{ car.brand }}</title>
-    <style>
-        .container {
-            display: flex;
-            justify-content: space-between;
-            padding: 2rem;
-        }
-        .left, .right {
-            flex: 1;
-            padding: 1rem;
-        }
-        .right {
-            text-align: center;
-            border-left: 1px solid #ccc;
-        }
-        .button-link {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            margin-top: 1rem;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .button-link:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="container">
-        <!-- LEFT: Car edit form -->
-        <div class="left">
-            <h2>Edit Car - {{ car.brand }}</h2>
-            {% if car.picture %}
-                <h4>Current Picture:</h4>
-                <img src="{{ car.picture.url }}" alt="Car Picture" width="300">
-            {% endif %}
+{% extends 'base.html' %} {% block tittle %} Edit {{ car.brand }} {% endblock %}
+{% block content %}
 
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save Changes</button>
-            </form>
+<section class="showcar-section">
+    <div class="container py-5">
+        <div class="mx-auto mb-3">
+            <a href="{% url 'garage' %}" class="btn btn-secondary btn-lg px-5 py-3">Back to Garage</a>
+        </div>
+        <!-- Car Header: Image + Title -->
+        <div class="row align-items-center mb-5">
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                {% if car.picture %}
+                <img src="{{ car.picture.url }}" alt="Car Picture" class="img-fluid rounded shadow">
+                {% else %}
+                <div class="bg-secondary text-white p-5 rounded">No image available</div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h2 class="mb-0">Editing: <span class="text-primary">{{ car.brand }}</span></h2>
+                <p class="text-muted">Use the form below to update the car information or manage tires.</p>
+            </div>
         </div>
 
-        <!-- RIGHT: Navigation buttons -->
-        <div class="right">
-            <a href="{% url 'garage' %}" class="button-link">Back to Garage</a>
-            <br>
-            <a href="{% url 'add_tires' car.car_id%}" class="button-link">Add a Tire set</a>
-            <br>
-            {% for tireset in tiresets %}
-                <a href="{% url 'edit_tireset' tireset.tireset_id %}" style="text-decoration: none; color: inherit;">
-                    <div class="tireset-item" style="margin-bottom: 10px;">
-                        <span><strong>Tireset Date:</strong> {{ tireset.date_driven }}</span> |
-                        <span><strong>Weather:</strong> {{ tireset.weather_when_used }}</span>
+        <!-- Edit Form Card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="{{ form.owner_name.id_for_label }}" class="form-label">Owner Name</label>
+                            {{ form.owner_name }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.brand.id_for_label }}" class="form-label">Brand</label>
+                            {{ form.brand }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.codriven.id_for_label }}" class="form-label">Co-Driven</label>
+                            {{ form.codriven }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.favorite_car.id_for_label }}" class="form-label">Favorite Car</label>
+                            {{ form.favorite_car }}
+                        </div>
+
+                        <div class="col-12">
+                            <label for="{{ form.picture.id_for_label }}" class="form-label">Car Picture</label>
+                            {{ form.picture }}
+                        </div>
+
+                        <div class="col-12">
+                            <label for="{{ form.free_form_text.id_for_label }}" class="form-label">Notes</label>
+                            {{ form.free_form_text }}
+                        </div>
+
                     </div>
-                </a>
-            {% empty %}
-                <li>No tiresets available for this vehicle.</li>
-            {% endfor %}
-            <!-- You could add more buttons here -->
+
+                    <div class="mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg mt-4">
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+            </div>
         </div>
+
+        <!-- Add Tires Button -->
+        <div class="text-center mb-5">
+            <a href="{% url 'add_tires' car.car_id %}" class="btn btn-success btn-lg px-5 py-3">
+                Add a Tire Set
+            </a>
+        </div>
+
+        <!-- Tire Sets -->
+        <div>
+            <h4 class="mb-3">Tire Sets</h4>
+            <div class="row">
+                {% for tireset in tiresets %}
+                <div class="col-md-6">
+                    <a href="{% url 'edit_tireset' tireset.tireset_id %}" class="text-decoration-none text-dark">
+                        <div class="p-3 mb-3 bg-light border rounded shadow-sm h-100">
+                            <div><strong>Tireset Date:</strong> {{ tireset.date_driven }}</div>
+                            <div><strong>Weather:</strong> {{ tireset.weather_when_used }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <p class="text-muted">No tiresets available for this vehicle.</p>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
-</body>
-</html>
+</section>
+
+
+
+
+
+
+{% endblock %}
+
+
+<!-- OLD CODE -->
+<!-- <section class="showcar-section">
+
+    <div class="container">
+
+
+        <h2>Edit Car - {{ car.brand }}</h2>
+        {% if car.picture %}
+        <h4>Current Picture:</h4>
+        <img src="{{ car.picture.url }}" alt="Car Picture" width="300">
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+        </form>
+
+
+
+
+        <a href="{% url 'garage' %}" class="button-link">Back to Garage</a>
+        <br>
+        <a href="{% url 'add_tires' car.car_id%}" class="button-link">Add a Tire set</a>
+        <br>
+        {% for tireset in tiresets %}
+        <a href="{% url 'edit_tireset' tireset.tireset_id %}" style="text-decoration: none; color: inherit;">
+            <div class="tireset-item" style="margin-bottom: 10px;">
+                <span><strong>Tireset Date:</strong> {{ tireset.date_driven }}</span> |
+                <span><strong>Weather:</strong> {{ tireset.weather_when_used }}</span>
+            </div>
+        </a>
+        {% empty %}
+        <li>No tiresets available for this vehicle.</li>
+        {% endfor %}
+
+
+    </div>
+
+
+</section> -->

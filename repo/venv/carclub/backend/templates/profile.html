@@ -5,20 +5,18 @@
 <main class="profile-section">
 
   {% if messages %}
-  <ul class="messages">
+  <div class="position-fixed top-50 start-50 translate-middle w-75" style="z-index: 1055;">
     {% for message in messages %}
-    <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </li>
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show fs-5 py-4 px-5 shadow-lg" role="alert">
+      <span>{{ message }}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
   {% endif %}
 
 
-  <div class="container">
+  <div class="container profile-container">
     <h1 class="text-center profile-title">{{ user.username }}'s Profile</h1>
 
     <!-- Profile Picture -->
@@ -31,7 +29,7 @@
     {% endif %}
 
     <!-- Form -->
-    <form method="POST" enctype="multipart/form-data" class="needs-validation modern-form">
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="row">
@@ -61,7 +59,7 @@
         {{ form.profile_picture }}
       </div>
 
-      <button type="submit" class="btn profile-btn profile-btn">Save Changes</button>
+      <button type="submit" class="btn profile-btn">Save Changes</button>
     </form>
   </div>
 

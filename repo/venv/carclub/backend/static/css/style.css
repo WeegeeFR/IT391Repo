@@ -302,6 +302,8 @@ nav.active {
     align-content: center;
 }
 
+
+
 .profile-title {
     margin-bottom: 15px;
     font-weight: 700;
@@ -519,4 +521,5 @@ nav.active {
         height: 40px;
         padding: 0 35px 0 35px;
     }
+
 }

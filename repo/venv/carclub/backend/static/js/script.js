@@ -26,9 +26,9 @@ $(document).ready(function () {
     // This is for auto-dismissing Messages
     setTimeout(function () {
         $(".alert").fadeOut("slow");
-    }, 5000); // 5 seconds
+    }, 2000); // 5 seconds
 
-    // This is for the butons on the stats page
+    // This is for the buttons on the stats page
     $(".btn").click(function () {
         $(".btn").hide();
         $(".loading").show();

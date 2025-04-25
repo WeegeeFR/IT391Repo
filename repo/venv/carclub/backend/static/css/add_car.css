@@ -7,7 +7,6 @@
     height: 100%;
     padding: 10rem 9% 2rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
     display: flex;
     justify-content: center;
 }
@@ -23,6 +22,7 @@
     margin-bottom: 5px;
     color: black;
 }
+
 
 .car-form .form-select,
 .car-form .form-control {
@@ -57,7 +57,9 @@
 
 
 
-
+#id_free_form_text {
+    resize: none;
+}
 
 .create-vehicle-container-btn {
     display: flex;
