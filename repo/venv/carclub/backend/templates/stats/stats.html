@@ -22,6 +22,19 @@
         display: none;  /* Initially hidden */
     }
 </style>
+<!--Display messages -->
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 <!-- First form will scrape the website for past events and links to generate options for dropdown -->
 {% if not show_dropdown%}
@@ -30,9 +43,42 @@
     <button type="submit" class="btn" name="get_events" onclick="disableButtons()">Get Past Events </button>
     <label class="loading" >Loading Statistics...</label>
 </form>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn" name="show_records" onclick="disableButtons()">Show Records</button>
+    <label class="loading" >Loading Statistics...</label>
+</form>
 {% endif %}
 
-{% if show_dropdown %}
+{% if show_dropdown and show_records %}
+<!-- button that let's you add a record-->
+<a href="{% url 'add_record' %}" class="active">
+    <button type="submit" class="btn" name="add_record">Add Record</button>
+</a>
+
+<!-- listing every record with a hyperlink to show the record off-->
+<h1>Your Records</h1>
+    
+{% if records %}
+    <ul>
+        {% for record in records %}
+            <li>
+                <a href="{% url 'show_record' record_id=record.record_id %}">
+                    {% if record.record_date %}
+                        <strong>{{ record.record_name }}</strong> - {{ record.record_date }}
+                    {% else %}
+                        <strong>{{ record.record_name }}</strong> - Unknown date
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No records found, considering adding one!</p>
+{% endif %}
+{% endif %}
+
+{% if show_dropdown and not show_records %}
     <!-- Dropdown with checkbox's to get a record from a event-->
     <form method="post">
         {% csrf_token %}
