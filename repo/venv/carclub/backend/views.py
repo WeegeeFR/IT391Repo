@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib import messages
 
-from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, CarEditForm, TiresetCreationForm, TireCreationForm, TiresetEditForm
-from .models import Car, Tire, Tireset
+from .forms import LoginForm, RegisterForm, ProfileUpdateForm, CarCreationForm, CarEditForm, TiresetCreationForm, TireCreationForm, TiresetEditForm, AddRecordForm, EditRecordForm
+from .models import Car, Tire, Tireset, Record
 from .handlers import scrape_season_events, get_records, get_links_from_string
 
 
@@ -201,7 +201,7 @@ def stats_view(request):
         # Generate the dictionary
         options_dict = scrape_season_events()
         # Store the dictionary in the session or pass it to the template context
-        return render(request, 'stats/stats.html', {'options_dict': options_dict, 'show_dropdown': True})
+        return render(request, 'stats/stats.html', {'options_dict': options_dict, 'show_dropdown': True, 'show_records': False})
 
     #Handle the second button press (after the dropdown menu is shown)
     elif request.method == 'POST' and 'selected_event' in request.POST:
@@ -232,8 +232,77 @@ def stats_view(request):
         #return all the data
         return render(request, 'stats/stats.html', {'options_dict': scrape_season_events(), 
                                                     'first_records': first_day_records, 'second_records': second_day_records,
-                                                    'show_dropdown': True, 'setting': selected_setting, 
+                                                    'show_dropdown': True, 'show_records': False, 'setting': selected_setting, 
                                                     'first_runs': first_day_runs, 'second_runs': second_day_runs})
+    #handle case if user wants to show records
+    elif request.method == 'POST' and 'show_records' in request.POST:
+        #get all records of the user
+        records = Record.objects.filter(record_owner=request.user)
+        #render stats page with records
+        return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
 
     #Default case when the page is first loaded
-    return render(request, 'stats/stats.html', {'show_dropdown': False})
+    return render(request, 'stats/stats.html', {'show_dropdown': False, 'show_records': False})
+
+#view to handle adding a record for a user
+@login_required
+def add_record_view(request):
+    user = request.user
+    if request.method == 'POST':
+        form = AddRecordForm(request.POST, initial={'user': user})
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your record has been created successfully")
+            records = Record.objects.filter(record_owner=request.user)
+            return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+    else:
+        form = AddRecordForm()
+    return render(request, 'stats/add_record.html', {'form': form})
+
+#view to handle showing off and allowing a user to edit 
+@login_required
+def show_record_view(request, record_id):
+    #fetch record using id
+    record = get_object_or_404(Record, pk=record_id)
+    #parsing thel ink
+    video_id = None
+    if record.video_link and "watch?v=" in record.video_link:
+        video_array = record.video_link.split("watch?v=")
+        if video_array[1]:
+            raw_id = video_array[1]
+            video_id = raw_id.split("&")[0]  # strips extra URL params
+    print(video_id)
+    if request.method == 'POST':
+        # Create a form instance with the existing record's data
+        form = EditRecordForm(request.POST, instance=record)
+        if form.is_valid():
+            # Save the updated record
+            form.save()
+            #return back to the user's show record page.
+            records = Record.objects.filter(record_owner=request.user)
+            return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+    else:
+        # For GET request, show the form with the current record data
+        form = EditRecordForm(instance=record)
+    return render(request, 'stats/show_record.html', {'form': form, 'record': record, 'video_id': video_id})
+
+@login_required
+def delete_record_view(request, record_id):
+    #get the record to delete
+    record = get_object_or_404(Record, pk=record_id)
+    if request.method == 'POST':
+        #just a little sanity check making sure the owner is indeed the owner before deleting
+        if record.record_owner != request.user:
+            messages.error(request, "You don't have permission to delete this record.")
+            records = Record.objects.filter(record_owner=request.user)
+            return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+        #delete record and send message saying its successfully deleted
+        record.delete()
+        messages.success(request, "Your record has been deleted successfully")
+        #get records, render the stats page to return to the records page
+        records = Record.objects.filter(record_owner=request.user)
+        return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+    #it should literally never get here, send a message if it does
+    messages.error(request, "Error deleting record.")
+    records = Record.objects.filter(record_owner=request.user)
+    return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})

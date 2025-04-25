@@ -94,4 +94,25 @@ class Tire(models.Model):
     #manufacturer info
     manufacturer_link = models.CharField(max_length=500, null=True, blank=True)
     manufacture_date = models.DateField(null=True)
-    
+
+#Record model to hold records
+class Record(models.Model):
+    #choices for record
+    RECORD_TYPE_CHOICES = [
+        ('Raw', 'Raw'),
+        ('Pax', 'Pax'),
+        ('Final', 'Final'),
+    ]
+    #primary key
+    record_id = models.AutoField(primary_key=True)
+    #foreign key to find it via owner
+    record_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    #record info
+    record_name = models.CharField(max_length=255)
+    record_type = models.CharField(max_length=255, choices=RECORD_TYPE_CHOICES, null=True)
+    record_date = models.DateField(null=True, blank=True)
+    #link to the run
+    video_link = models.CharField(max_length=100, null=True, blank=True)
+    #tostring
+    def __str__(self):
+        return f"{self.record_type} - {self.record_date}"

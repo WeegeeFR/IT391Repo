@@ -26,6 +26,9 @@ urlpatterns = [
 
     #statistic pathing
     path("stats/", views.stats_view, name="stats"),
+    path("stats/add_record", views.add_record_view, name="add_record"),
+    path("stats/show_record/<int:record_id>", views.show_record_view, name="show_record"),
+    path("stats/delete_record/<int:record_id>", views.delete_record_view, name="delete_record"),
 
     #password reset pathing
     path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),
