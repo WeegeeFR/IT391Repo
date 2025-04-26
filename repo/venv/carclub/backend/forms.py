@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
-from .models import User, Car, Tire, Tireset
+from .models import User, Car, Tire, Tireset, Record
 from .handlers import get_weather
 
 #inherits from the base authentication form, just customizing it here
@@ -146,7 +146,10 @@ class TiresetCreationForm(forms.ModelForm):
         model = Tireset
         fields = ['date_driven', 'highway_miles']
         widgets = {
-            'date_driven': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
+            'date_driven': forms.SelectDateWidget(
+                empty_label=("Choose Year", "Choose Month", "Choose Day"),
+                years=range(2019, 2026)
+            ),
             'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
         }
     def save(self, commit=True):
@@ -174,7 +177,10 @@ class TiresetEditForm(forms.ModelForm):
         model = Tireset
         fields = ['date_driven', 'highway_miles', 'weather_when_used']
         widgets = {
-            'date_driven': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
+            'date_driven': forms.SelectDateWidget(
+                empty_label=("Choose Year", "Choose Month", "Choose Day"),
+                years=range(2019, 2026)
+            ),
             'highway_miles': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter highway miles'}),
             'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear info'}),
 
@@ -194,9 +200,54 @@ class TireCreationForm(forms.ModelForm):
         model = Tire
         fields = ['tire_picture', 'tire_pressure', 'tread_wear', 'manufacture_date', 'manufacturer_link']
         widgets = {
-            'manufacture_date': forms.SelectDateWidget(empty_label={"Choose Year", "Choose Month", "Choose Day"}),
+            'manufacture_date': forms.SelectDateWidget(
+                empty_label=("Choose Year", "Choose Month", "Choose Day"),
+                years=range(2019, 2026)
+            ),
             'tire_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'tire_pressure': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter tire pressure'}),
             'tread_wear': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tread wear info'}),
             'manufacturer_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter manufacturer link'}),
+        }
+#stats forms
+
+class AddRecordForm(forms.ModelForm):
+    class Meta:
+        model = Record
+        fields = ['record_name', 'record_type', 'record_date', 'video_link']
+        widgets = {
+            'record_date': forms.SelectDateWidget(
+                empty_label=("Choose Year", "Choose Month", "Choose Day"),
+                years=range(2019, 2026)
+            ),
+            'record_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a record name'}),
+            'video_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter youtube.com link.'}),
+        }
+    def save(self, commit=True):
+        #Get the form data (cleaned data)
+        record_instance = super().save(commit=False)
+        #Set the owner of the record to the user
+        user = self.initial.get('user')
+        if user:
+            record_instance.record_owner = user
+        else:
+            raise ValidationError("Owner is required for the record.")
+        #now save the record
+        if commit:
+            record_instance.save()
+        print(record_instance)
+        return record_instance
+    
+
+class EditRecordForm(forms.ModelForm):
+    class Meta:
+        model = Record
+        fields = ['record_name', 'record_type', 'record_date', 'video_link']
+        widgets = {
+            'record_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a record name'}),
+            'record_date': forms.SelectDateWidget(
+                empty_label=("Choose Year", "Choose Month", "Choose Day"),
+                years=range(2019, 2026)
+            ),
+            'video_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter youtube.com link.'}),
         }
