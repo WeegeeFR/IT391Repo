@@ -1,6 +1,6 @@
 /* Style for the button at the top */
 .garage-section {
-    background: var(--white-color);
+    background: #f8f9fa;
     min-height: calc(100vh - 88px);
     position: absolute;
     width: 100%;
@@ -76,7 +76,7 @@
 /* Show Car Section */
 
 .showcar-section {
-    background: var(--white-color);
+    background: #f8f9fa;
     min-height: calc(100vh - 88px);
     position: absolute;
     width: 100%;
@@ -86,8 +86,43 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.img-fluid {
-    max-height: 300px;
+.edit-car-title {
+    color: #343a40;
+}
+
+.edit-car-text {
+    font-size: 0.95rem;
+}
+
+.car-image {
+    max-height: 200px;
     object-fit: cover;
-    border-radius: 0.5rem;
+}
+
+.no-image {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+}
+
+.edit-car-label {
+    font-size: 1rem;
+    color: #495057;
+}
+
+.edit-car-control,
+.edit-car-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 0.75rem;
+    font-size: 1.4rem;
+}
+
+.edit-car-control:focus,
+.edit-car-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }

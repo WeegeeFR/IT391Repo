@@ -152,36 +152,36 @@ class CarEditForm(forms.ModelForm):
         max_length=100,
         required=True,
         error_messages={'required': 'Please enter the owner\'s name.'},
-        widget=forms.TextInput(attrs={'class': 'form-control', 'maxlength': 100})
+        widget=forms.TextInput(attrs={'class': 'form-control edit-car-control', 'maxlength': 100})
     )
 
     favorite_car = forms.NullBooleanField(
         required=False,
-        widget=forms.NullBooleanSelect(attrs={'class': 'form-select'})
+        widget=forms.NullBooleanSelect(attrs={'class': 'form-select edit-car-select'})
     )
 
     codriven = forms.NullBooleanField(
         required=True,
         error_messages={'required': 'Please select whether the car is co-driven.'},
-        widget=forms.NullBooleanSelect(attrs={'class': 'form-select'})
+        widget=forms.NullBooleanSelect(attrs={'class': 'form-select edit-car-select'})
     )
 
     brand = forms.CharField(
         max_length=100,
         required=True,
         error_messages={'required': 'Please enter the brand of the car.'},
-        widget=forms.TextInput(attrs={'class': 'form-control', 'maxlength': 100})
+        widget=forms.TextInput(attrs={'class': 'form-control edit-car-control', 'maxlength': 100})
     )
 
     picture = forms.ImageField(
         required=False,
-        widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control edit-car-control'})
     )
 
     free_form_text = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
-            'class': 'form-control',
+            'class': 'form-control edit-car-control',
             'rows': 4,
             'maxlength': 500
         })
