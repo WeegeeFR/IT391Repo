@@ -148,6 +148,7 @@ def add_tires_view(request, car_id):
 
     context = {
         'car': car,
+        'car_id': car_id,
         'tireset_form': tireset_form,
         'tire_forms': tire_forms,
     }

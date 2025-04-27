@@ -28,11 +28,26 @@ $(document).ready(function () {
         $(".alert").fadeOut("slow");
     }, 2000); // 5 seconds
 
-    // This is for the buttons on the stats page
-    $(".btn").click(function () {
-        $(".btn").hide();
+    //This is for the buttons on the stats page
+    $(".stats-btn").click(function () {
+        $(".stats-btn").hide();
         $(".loading").show();
     });
+
+
+
+    $('.tire-form').hide(); // Initially hide all tire forms
+
+    $('.tire-form-button').on('click', function () {
+        $('.tire-form').hide();
+        $('.tire-form-button').removeClass('btn-primary').addClass('btn-outline-primary');
+
+        var formNumber = $(this).data('form-number');
+        $('#form' + formNumber).fadeIn(200);
+        $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+    });
+
+
 
 
 });
