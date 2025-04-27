@@ -1,301 +1,505 @@
+{% extends 'base.html' %} {% block tittle %}Add Tires{% endblock %}
 {% block content %}
 
-<h1>Statistics</h1>
-<script type="text/javascript">
-    function disableButtons() {
-        //Get all buttons with the class 'submitBtn'
-        var submitButtons = document.querySelectorAll('.stats-btn');
-        var loadingLabels = document.querySelectorAll('.loading');
 
-        //Loop through each button and disable it
-        submitButtons.forEach(function (button) {
+<script type="text/javascript">
+    function disableButtons(clickedButton) { // Accept the clicked button as an argument
+        // Find ALL buttons with the class 'stats-btn' to disable them
+        var allSubmitButtons = document.querySelectorAll('.stats-btn');
+        allSubmitButtons.forEach(function (button) {
             button.style.display = "none";
         });
-        loadingLabels.forEach(function (label) {
-            label.style.display = "block";
+
+        // Find the loading label associated with the SPECIFIC clicked button.
+        // Assumes the loading span is the next element sibling after the button.
+        var loadingLabel = clickedButton.nextElementSibling;
+
+        // Check if the next sibling is actually the loading span and display it
+        if (loadingLabel && loadingLabel.classList.contains('loading')) {
+            loadingLabel.style.display = "block";
+        }
+
+        // If the loading span is inside the button's parent but not immediately next,
+        // you might need a different way to find it, like searching within the parent form:
+        var parentForm = clickedButton.closest('form'); // Find the parent form
+        if (parentForm) {
+            var loadingLabelInForm = parentForm.querySelector('.loading'); // Find the loading span within that form
+            if (loadingLabelInForm) {
+                loadingLabelInForm.style.display = 'block';
+            }
+        }
+
+        // Also hide the third loading span if it exists (inside the dropdown form)
+        // This could be refined further depending on exact requirements, but this hides all initially
+        var otherLoadingLabels = document.querySelectorAll('.loading');
+        otherLoadingLabels.forEach(function (label) {
+            if (label !== loadingLabel) { // Don't hide the one we just showed
+                // Or maybe just ensure all are hidden initially before showing the correct one
+                // This part might need adjustment based on whether the third loading span
+                // should *always* be hidden when the first two buttons are clicked.
+                // A simpler approach might be to just show the correct one as above,
+                // relying on the initial CSS to hide all others.
+            }
         });
     }
 </script>
+
+
+
 <style>
-    /* The label with the class 'loading' will be hidden initially */
     .loading {
+
         display: none;
-        /* Initially hidden */
+
     }
 </style>
-<!--Display messages -->
+
+
+
+<!-- Display messages -->
+
 {% if messages %}
-<ul class="messages">
+
+<ul class="list-unstyled">
+
     {% for message in messages %}
+
     <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+
         {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
     </li>
+
     {% endfor %}
+
 </ul>
+
 {% endif %}
 
-<!-- First form will scrape the website for past events and links to generate options for dropdown -->
-{% if not show_dropdown%}
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class=".stats-btn" name="get_events" onclick="disableButtons()">Get Past Events </button>
-    <label class="loading">Loading Statistics...</label>
-</form>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class=".stats-btn" name="show_records" onclick="disableButtons()">Show Records</button>
-    <label class="loading">Loading Statistics...</label>
-</form>
-{% endif %}
 
-{% if show_dropdown and show_records %}
-<!-- button that let's you add a record-->
-<a href="{% url 'add_record' %}" class="active">
-    <button type="submit" class=".stats-btn" name="add_record">Add Record</button>
-</a>
 
-<!-- listing every record with a hyperlink to show the record off-->
-<h1>Your Records</h1>
+<section class="stats-section container my-5">
 
-{% if records %}
-<ul>
-    {% for record in records %}
-    <li>
-        <a href="{% url 'show_record' record_id=record.record_id %}">
-            {% if record.record_date %}
-            <strong>{{ record.record_name }}</strong> - {{ record.record_date }}
-            {% else %}
-            <strong>{{ record.record_name }}</strong> - Unknown date
-            {% endif %}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No records found, considering adding one!</p>
-{% endif %}
-{% endif %}
 
-{% if show_dropdown and not show_records %}
-<!-- Dropdown with checkbox's to get a record from a event-->
-<form method="post">
-    {% csrf_token %}
-    <label for="dropdown">Choose a event to get records from:</label>
-    <select id="dropdown" name="dropdown">
-        {% for label, value in options_dict.items %}
-        <option value="{{ value }}">{{ label }}</option>
+
+
+
+    {% if not show_dropdown %}
+
+    <div class="d-flex flex-column align-items-center mb-5 stats-section-buttons">
+
+        <h1 class="text-center mb-5 stats-title display-3">Statistics</h1>
+
+        <form method="post" class="mb-3 w-100" style="max-width: 400px;">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 py-4 px-4 stats-btn" name="get_events"
+                onclick="disableButtons(this)">
+
+                Get Past Events
+
+            </button>
+
+            <span class="loading text-primary text-center mt-2">Loading Statistics...</span>
+
+        </form>
+
+
+
+        <form method="post" class="w-100" style="max-width: 400px;">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-secondary btn-lg w-100 py-4 px-4 stats-btn" name="show_records"
+                onclick="disableButtons(this)">
+
+                Show Records
+
+            </button>
+
+            <span class="loading text-primary text-center mt-2">Loading Statistics...</span>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+
+
+    {% if show_dropdown and show_records %}
+
+    <div class="text-center mb-4">
+
+        <a href="{% url 'add_record' %}" class="btn btn-success btn-lg">Add Record</a>
+
+    </div>
+
+
+
+    <h2 class="text-center mb-4">Your Records</h2>
+
+    {% if records %}
+
+    <ul class="list-group mb-5">
+
+        {% for record in records %}
+
+        <li class="list-group-item">
+
+            <a href="{% url 'show_record' record_id=record.record_id %}" class="text-decoration-none">
+
+                <strong>{{ record.record_name }}</strong> -
+
+                {% if record.record_date %}
+
+                {{ record.record_date }}
+
+                {% else %}
+
+                Unknown date
+
+                {% endif %}
+
+            </a>
+
+        </li>
+
         {% endfor %}
-    </select>
-    <br><br>
-    <!-- raw and pax settings for now, need to add final-->
-    <label for="raw">
-        <input type="radio" name=setting id="raw" value="Raw" checked> Raw
-    </label>
-    <label for="pax">
-        <input type="radio" name=setting id="pax" value="Pax"> Pax
-        <label for="raw">
-        </label>
-        <input type="radio" name=setting id="final" value="Final"> Final
-    </label><br>
 
-    <label for="namefield">Search by Name</label>
-    <input type="text" id="name" name="name" value="{{ name }}" placeholder="Name">
-    <br><br>
+    </ul>
 
-    <label for="carfield">Search by Car Make:</label>
-    <input type="text" id="car_make" name="car_make" value="{{ car_make }}" placeholder="Car Make">
-    <br><br>
+    {% else %}
 
-    <!-- Second Button: Call function with the selected value -->
-    <label class="loading">Loading Statistics...</label>
-    <button type="submit" class=".stats-btn" name="selected_event" onclick="disableButtons()">Get Stats</button>
-</form>
+    <h3 class="text-center">No records found, consider adding one!</h3>
 
-<!--Listing the records-->
-<!--Pax-->
-{% if setting == "Pax" and first_records|length > 0 %}
-{% if second_records|length > 0 %}
-<label for="record_label">First Day:</label>
-{% endif %}
-<table border="1">
-    <thead>
-        <tr>
-            <th>Pax Pos.</th>
-            <th>Pos.</th>
-            <th>Class</th>
-            <th>#</th>
-            <th>Driver</th>
-            <th>Car Make</th>
-            <th>Total</th>
-            <th>Factor</th>
-            <th>Pax Time</th>
-            <th>Diff</th>
-            <th>From 1st</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in first_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
-{% if setting == "Pax" and second_records|length > 0 %}
-<label for="record_label">Second Day:</label>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Pax Pos.</th>
-            <th>Pos.</th>
-            <th>Class</th>
-            <th>#</th>
-            <th>Driver</th>
-            <th>Car Make</th>
-            <th>Total</th>
-            <th>Factor</th>
-            <th>Pax Time</th>
-            <th>Diff</th>
-            <th>From 1st</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in second_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+    {% endif %}
 
-<!--Raw Records-->
-{% if setting == "Raw" and first_records|length > 0 %}
-{% if second_records|length > 0 %}
-<label for="record_label">First Day:</label>
-{% endif %}
-<table border="1">
-    <thead>
-        <tr>
-            <th>Row #</th>
-            <th>Pos.</th>
-            <th>Class</th>
-            <th>#</th>
-            <th>Driver</th>
-            <th>Car Make</th>
-            <th>Raw Time</th>
-            <th>Diff</th>
-            <th>From 1st</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in first_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+    {% endif %}
 
-{% if setting == "Raw" and second_records|length > 0 %}
-<label for="record_label">Second Day:</label>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Row #</th>
-            <th>Pos.</th>
-            <th>Class</th>
-            <th>#</th>
-            <th>Driver</th>
-            <th>Car Make</th>
-            <th>Raw Time</th>
-            <th>Diff</th>
-            <th>From 1st</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in second_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
 
-<!--Final Records-->
-{% if setting == "Final" and first_records|length > 0 %}
-{% if second_records|length > 0 %}
-<label for="record_label">First Day:</label>
-{% endif %}
-<table border="1">
-    <thead>
-        <tr>
-            <th colspan="5">Participant Info</th>
-            <th>Car Color</th>
-            {% for item in first_runs %}
-            <td>{{ item }}</td>
-            {% endfor %}
-            <th>Total</th>
-            <th>Diff.</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in first_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
 
-{% if setting == "Final" and second_records|length > 0 %}
-<label for="record_label">Second Day:</label>
-<table border="1">
-    <thead>
-        <tr>
-            <th colspan="5">Participant Info</th>
-            <th>Car Color</th>
-            {% for item in second_runs %}
-            <td>{{ item }}</td>
-            {% endfor %}
-            <th>Total</th>
-            <th>Diff.</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in second_records %}
-        <tr>
-            <!-- Iterate through each item in the row (this is the array or tuple) -->
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
-{% endif %}
+    {% if show_dropdown and not show_records %}
+
+    <form method="post" class="mx-auto p-4 bg-light rounded shadow-sm" style="max-width: 600px;">
+
+        {% csrf_token %}
+
+
+
+        <div class="mb-4">
+
+            <label for="dropdown" class="form-label fw-light h3">Choose an Event:</label>
+
+            <select id="dropdown" name="dropdown" class="form-select form-select-lg h3">
+
+                {% for label, value in options_dict.items %}
+
+                <option value="{{ value }}">{{ label }}</option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+
+        <div class="mb-4 text-center">
+
+            <label class="form-label fw-light mb-2 d-block h3">Choose Setting:</label>
+
+            <div class="d-flex justify-content-center gap-4">
+
+                <div class="form-check form-check-inline">
+
+                    <input type="radio" class="form-check-input" name="setting" id="raw" value="Raw" checked>
+
+                    <label class="form-check-label h4" for="raw">Raw</label>
+
+                </div>
+
+                <div class="form-check form-check-inline">
+
+                    <input type="radio" class="form-check-input" name="setting" id="pax" value="Pax">
+
+                    <label class="form-check-label h4" for="pax">Pax</label>
+
+                </div>
+
+                <div class="form-check form-check-inline">
+
+                    <input type="radio" class="form-check-input" name="setting" id="final" value="Final">
+
+                    <label class="form-check-label h4" for="final">Final</label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mb-4">
+
+            <label for="name" class="form-label fw-light h3">Search by Name:</label>
+
+            <input type="text" id="name" name="name" value="{{ name }}" class="form-control form-control-lg h4"
+                placeholder="Enter driver's name">
+
+        </div>
+
+
+
+        <div class="mb-4">
+
+            <label for="car_make" class="form-label fw-light h3">Search by Car Make:</label>
+
+            <input type="text" id="car_make" name="car_make" value="{{ car_make }}"
+                class="form-control form-control-lg h4" placeholder="Enter car make">
+
+        </div>
+
+
+
+        <div class="d-flex flex-column align-items-center">
+
+            <span class="loading text-primary text-center mb-2 h3">Loading Statistics...</span>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 py-3 px-3 stats-btn" name="selected_event"
+                onclick="disableButtons(this)">Get Stats</button>
+
+        </div>
+
+    </form>
+
+    {% endif %}
+
+
+
+
+
+    <!-- Table Display -->
+
+    {% if first_records %}
+
+    {% if setting == "Pax" or setting == "Raw" or setting == "Final" %}
+
+    {% if second_records %}
+
+    <h3 class="mt-5">First Day:</h3>
+
+    {% endif %}
+
+    <div class="table-responsive mb-4">
+
+        <table class="table table-striped table-hover table-bordered align-middle">
+
+            <thead class="table-primary">
+
+                <tr>
+
+                    {% if setting == "Pax" %}
+
+                    <th>Pax Pos.</th>
+
+                    <th>Pos.</th>
+
+                    <th>Class</th>
+
+                    <th>#</th>
+
+                    <th>Driver</th>
+
+                    <th>Car Make</th>
+
+                    <th>Total</th>
+
+                    <th>Factor</th>
+
+                    <th>Pax Time</th>
+
+                    <th>Diff</th>
+
+                    <th>From 1st</th>
+
+                    {% elif setting == "Raw" %}
+
+                    <th>Row #</th>
+
+                    <th>Pos.</th>
+
+                    <th>Class</th>
+
+                    <th>#</th>
+
+                    <th>Driver</th>
+
+                    <th>Car Make</th>
+
+                    <th>Raw Time</th>
+
+                    <th>Diff</th>
+
+                    <th>From 1st</th>
+
+                    {% elif setting == "Final" %}
+
+                    <th colspan="5">Participant Info</th>
+
+                    <th>Car Color</th>
+
+                    {% for item in first_runs %}
+
+                    <th>{{ item }}</th>
+
+                    {% endfor %}
+
+                    <th>Total</th>
+
+                    <th>Diff.</th>
+
+                    {% endif %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in first_records %}
+
+                <tr>
+
+                    {% for item in row %}
+
+                    <td>{{ item }}</td>
+
+                    {% endfor %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+
+
+
+    {% if second_records %}
+
+    <h3 class="mt-5">Second Day:</h3>
+
+    <div class="table-responsive mb-4">
+
+        <table class="table table-striped table-hover table-bordered align-middle">
+
+            <thead class="table-primary">
+
+                <tr>
+
+                    {% if setting == "Pax" %}
+
+                    <th>Pax Pos.</th>
+
+                    <th>Pos.</th>
+
+                    <th>Class</th>
+
+                    <th>#</th>
+
+                    <th>Driver</th>
+
+                    <th>Car Make</th>
+
+                    <th>Total</th>
+
+                    <th>Factor</th>
+
+                    <th>Pax Time</th>
+
+                    <th>Diff</th>
+
+                    <th>From 1st</th>
+
+                    {% elif setting == "Raw" %}
+
+                    <th>Row #</th>
+
+                    <th>Pos.</th>
+
+                    <th>Class</th>
+
+                    <th>#</th>
+
+                    <th>Driver</th>
+
+                    <th>Car Make</th>
+
+                    <th>Raw Time</th>
+
+                    <th>Diff</th>
+
+                    <th>From 1st</th>
+
+                    {% elif setting == "Final" %}
+
+                    <th colspan="5">Participant Info</th>
+
+                    <th>Car Color</th>
+
+                    {% for item in second_runs %}
+
+                    <th>{{ item }}</th>
+
+                    {% endfor %}
+
+                    <th>Total</th>
+
+                    <th>Diff.</th>
+
+                    {% endif %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in second_records %}
+
+                <tr>
+
+                    {% for item in row %}
+
+                    <td>{{ item }}</td>
+
+                    {% endfor %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
 
 {% endblock %}

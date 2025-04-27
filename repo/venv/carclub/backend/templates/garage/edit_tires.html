@@ -1,62 +1,82 @@
+{% extends 'base.html' %} {% block tittle %}Add Tires{% endblock %}
 {% block content %}
-<section class="add-car-section">
-    <!-- Main Form -->
-    <form method="POST" enctype="multipart/form-data" class="tireset-form-header">
-        {% csrf_token %}
-        <div class="container tireset-form">
-            {{ tireset_form.as_p }}
-        </div>
-        <div class="container tire-forms">
-            <div class="tire-form" id="form1" style="display:none;">
-                <h3>Left Front Tire</h3>
-                {{ tire_forms.0.as_p }} 
+<section id="edit-tires-section" class="dashboard-section">
+    <div class="container">
+        <h2 class="dashboard-title text-center mb-4 fw-bold text-info">Edit Tire Set</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="dashboard-card mb-4">
+                <h3 class="card-title fw-semibold text-secondary mb-3">Tire Set Information</h3>
+                <div class="row g-3">
+                    {{ tireset_form.as_p }}
+                </div>
             </div>
 
-            <div class="tire-form" id="form2" style="display:none;">
-                <h3>Left Back Tire</h3>
-                {{ tire_forms.1.as_p }} 
+            <div class="button-bar d-flex flex-wrap gap-2 justify-content-center mb-4">
+                <button type="button" class="tire-button btn btn-outline-primary" data-form-number="1">Left
+                    Front</button>
+                <button type="button" class="tire-button btn btn-outline-primary" data-form-number="2">Left
+                    Back</button>
+                <button type="button" class="tire-button btn btn-outline-primary" data-form-number="3">Right
+                    Front</button>
+                <button type="button" class="tire-button btn btn-outline-primary" data-form-number="4">Right
+                    Back</button>
             </div>
 
-            <div class="tire-form" id="form3" style="display:none;">
-                <h3>Right Front Tire</h3>
-                {{ tire_forms.2.as_p }} 
+            <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+                <div class="col">
+                    <div class="dashboard-card tire-form p-3" id="form1">
+                        <h6 class="form-title fw-semibold text-secondary">Left Front Tire</h6>
+                        {{ tire_forms.0.as_p }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dashboard-card tire-form p-3" id="form2">
+                        <h6 class="form-title fw-semibold text-secondary">Left Back Tire</h6>
+                        {{ tire_forms.1.as_p }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dashboard-card tire-form p-3" id="form3">
+                        <h6 class="form-title fw-semibold text-secondary">Right Front Tire</h6>
+                        {{ tire_forms.2.as_p }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dashboard-card tire-form p-3" id="form4">
+                        <h6 class="form-title fw-semibold text-secondary">Right Back Tire</h6>
+                        {{ tire_forms.3.as_p }}
+                    </div>
+                </div>
             </div>
 
-            <div class="tire-form" id="form4" style="display:none;">
-                <h3>Right Back Tire</h3>
-                {{ tire_forms.3.as_p }}
+            <div class="d-flex justify-content-end mb-4">
+                <button type="submit" class="submit-button btn btn-success btn-lg">
+                    Finish Editing
+                </button>
             </div>
-        </div>
-
-        <div class="container">
-            <button type="button" id="LeftFrontButton" onclick="showForm(1)" class="btn btn-secondary">Edit Left Front
-                Tire</button>
-            <button type="button" id="LeftBackButton" onclick="showForm(2)" class="btn btn-secondary">Edit Left Back
-                Tire</button>
-            <button type="button" id="RightFrontButton" onclick="showForm(3)" class="btn btn-secondary">Edit Right Front
-                Tire</button>
-            <button type="button" id="RightBackButton" onclick="showForm(4)" class="btn btn-secondary">Edit Right Back
-                Tire</button>
-        </div>
-        <div class="row create-tireset-container-btn">
-            <button type="submit">Finish Editing</button>
-        </div>
-    </form>
-    <!--Javascript to deal with the four tire buttons-->
-    <script>
-        // JavaScript to show/hide item forms when the buttons are clicked
-        function showForm(formNumber) {
-            var forms = document.querySelectorAll('.tire-form');
-            forms.forEach(function (form) {
-                form.style.display = 'none'; //hide every form
-            });
-            // Show the selected form
-            var selectedForm = document.getElementById('form' + formNumber);
-            if (selectedForm) {
-                selectedForm.style.display = 'block'; //show the selected form
-            }
-
-        }
-    </script>
+        </form>
+    </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+        var $section = $('#edit-tires-section');
+
+        $section.find('.tire-form').hide();
+
+        $section.find('.tire-button').on('click', function () {
+            $section.find('.tire-form').hide();
+            $section.find('.tire-button').removeClass('btn-primary').addClass('btn-outline-primary');
+
+            var formNumber = $(this).data('form-number');
+            $section.find('#form' + formNumber).fadeIn(200);
+            $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+        });
+    });
+</script>
+
+
 {% endblock %}

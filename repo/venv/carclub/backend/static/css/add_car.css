@@ -1,108 +1,93 @@
-.add-car-section {
+.add-car-section,
+.dashboard-section {
     padding-top: 10rem;
     min-height: 100vh;
     background: #f8f9fa;
     color: black;
 }
 
-.add-car-title {
-    color: #007bff;
-    margin-bottom: 2rem;
-    font-weight: 500;
+
+/* new css below */
+.dashboard-title {
+    color: #007bff !important;
+    margin-bottom: 2rem !important;
+    font-size: 2rem;
 }
 
-.tire-set-info {
-    font-size: 1.4rem;
-}
-
-.tire-form h6 {
-    font-size: 1.8rem;
-    margin-bottom: 0.75rem;
-    color: #be8b2c;
-    font-weight: 500;
-}
-
-.tire-form label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    /* Bolder labels */
-    color: #495057;
-    margin-top: 0.75rem;
-    margin-bottom: 0.25rem;
-    /* Add a little space below the label */
-    display: block;
-    /* Ensure labels take full width */
-}
-
-.tire-form input[type="text"],
-.tire-form input[type="number"],
-.tire-form input[type="date"],
-.tire-form select {
-    width: 100%;
-    padding: 0.8rem;
-    /* Slightly more padding */
-    margin-bottom: 1.2rem;
-    /* More spacing between inputs */
-    border: 1px solid #ced4da;
+.dashboard-card {
+    background-color: #fff;
+    border: 1px solid #e3e6f0;
     border-radius: 0.3rem;
-    /* Slightly more rounded borders */
-    box-sizing: border-box;
-    font-size: 1.4rem;
+    box-shadow: 0 0.15rem 0.25rem rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.tire-form input:focus,
-.tire-form select:focus {
-    border-color: #007bff;
-    /* Highlight on focus */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    /* Add focus shadow */
-    outline: none;
-    /* Remove default focus outline */
+.card-title {
+    color: #4a5568;
+    margin-bottom: 1rem !important;
+    font-size: 1.6rem;
 }
 
-.tire-form-button {
-    font-size: 1.1rem;
+.form-title {
+    color: #6a7180;
+    margin-bottom: 1rem !important;
+    font-size: 1.6rem;
+}
+
+.button-bar {
+    margin-bottom: 2rem !important;
+}
+
+.tire-button {
     font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.25rem;
     transition: all 0.2s ease-in-out;
-    /* Smooth hover transitions */
 }
 
-.tire-form-button:hover {
-    transform: translateY(-2px);
-    /* Slight lift on hover */
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
-    /* Subtle shadow on hover */
+.tire-button.btn-primary {
+    box-shadow: 0 0.15rem 0.25rem rgba(0, 123, 255, 0.2);
 }
 
-.create-tireset-container-btn {
-    margin-top: 3rem;
-    text-align: right;
+.submit-button {
+    font-weight: 600;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.15rem 0.25rem rgba(40, 167, 69, 0.2);
 }
 
-.create-tireset-container-btn button {
-    padding: 1.1rem 2.2rem;
-    /* Larger button */
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 0.3rem;
-    background-color: #28a745;
-    /* Green color for create button */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.create-tireset-container-btn button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
-}
-
-/* Style for the hidden tire forms */
 .tire-form {
-    display: none;
+    border: 1px solid #d1d3e2;
+    background-color: #f9fafa;
+    border-radius: 0.3rem;
+    box-shadow: none;
+    font-size: 2rem;
 }
 
+/* Optional: Add some spacing to form elements within the cards */
+.dashboard-card .row>div>p {
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-card .row>div>p>label {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    display: block;
+}
+
+.dashboard-card .row>div>p>input[type="text"],
+.dashboard-card .row>div>p>input[type="number"],
+.dashboard-card .row>div>p>input[type="file"],
+.dashboard-card .row>div>p>select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+}
+
+
+/* new css above */
 
 
 .car-form-header {
@@ -188,3 +173,13 @@
  .hidden {
      display: none;
  }
+
+
+/* Edit Tires Section */
+
+.edit-tires-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
+}
