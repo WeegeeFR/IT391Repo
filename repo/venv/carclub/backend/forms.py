@@ -272,9 +272,11 @@ class AddRecordForm(forms.ModelForm):
         widgets = {
             'record_date': forms.SelectDateWidget(
                 empty_label=("Choose Year", "Choose Month", "Choose Day"),
-                years=range(2019, 2026)
+                years=range(2019, 2026),
+                attrs={'class': 'form-select'}
             ),
             'record_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a record name'}),
+            'record_type': forms.Select(attrs={'class': 'form-select'}),  # For ChoiceFields or ModelChoiceFields
             'video_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter youtube.com link.'}),
         }
     def save(self, commit=True):
@@ -298,10 +300,12 @@ class EditRecordForm(forms.ModelForm):
         model = Record
         fields = ['record_name', 'record_type', 'record_date', 'video_link']
         widgets = {
-            'record_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a record name'}),
             'record_date': forms.SelectDateWidget(
                 empty_label=("Choose Year", "Choose Month", "Choose Day"),
-                years=range(2019, 2026)
+                years=range(2019, 2026),
+                attrs={'class': 'form-select'}
             ),
+            'record_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a record name'}),
+            'record_type': forms.Select(attrs={'class': 'form-select'}),  # For ChoiceFields or ModelChoiceFields
             'video_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter youtube.com link.'}),
         }

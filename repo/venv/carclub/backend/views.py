@@ -254,11 +254,23 @@ def add_record_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your record has been created successfully")
-            records = Record.objects.filter(record_owner=request.user)
-            return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+            return redirect('stats')  # <-- redirect to the page that shows the list
     else:
         form = AddRecordForm()
     return render(request, 'stats/add_record.html', {'form': form})
+
+# def add_record_view(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         form = AddRecordForm(request.POST, initial={'user': user})
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Your record has been created successfully")
+#             records = Record.objects.filter(record_owner=request.user)
+#             return render(request, 'stats/stats.html', {'show_dropdown': True, 'show_records': True, 'records': records})
+#     else:
+#         form = AddRecordForm()
+#     return render(request, 'stats/add_record.html', {'form': form})
 
 #view to handle showing off and allowing a user to edit 
 @login_required

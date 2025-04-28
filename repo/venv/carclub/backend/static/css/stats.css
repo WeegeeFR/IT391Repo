@@ -1,9 +1,4 @@
 .stats-section {
-    /* position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 10rem 9% 2rem;
-    background: var(--white-color); */
     padding-top: 10rem;
     min-height: 100vh;
     background: #f8f9fa;
@@ -36,14 +31,85 @@
     font-size: 2.5rem;
 }
 
-/* .get-events-btn {
-    padding: 12px 0 12px 0;
-    background: linear-gradient(135deg, var(--blue), var(--darkblue));
-    color: var(--white-color);
+/* add record section */
+
+.add-record-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
+}
+
+.add-record-section h2 {
+    color: #28a745;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.add-record-section .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.3rem;
+}
+
+.add-record-section .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.add-record-section .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.add-record-section .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.add-record-section .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.add-record-section .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.add-record-section .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.add-record-section .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+/* show record section */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.show-record-btn {
     border-radius: 4px;
     cursor: pointer;
-    font-size: clamp(1.8rem, 8vw, 3rem);
-    text-decoration: none;
-    transition: background 0.3s ease;
-    width: min(420px, 90%);
-} */
+    font-size: 1.4rem;
+}
