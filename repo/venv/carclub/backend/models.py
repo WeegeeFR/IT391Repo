@@ -21,8 +21,8 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)#set this to false to deactivate an account, don't remove from database
 
     #logging fields
-    last_login = models.CharField(max_length=100)
-    date_joined = models.CharField(max_length=100)
+    last_login = models.DateTimeField(null=True)
+    date_joined = models.DateTimeField(null=True)
 
     #extra user fields
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)

@@ -57,7 +57,7 @@ ROOT_URLCONF = 'carclub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,13 +139,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #all the settings for email sending
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#EMAIL_HOST_USER = 'your_email@gmail.com'
-#EMAIL_HOST_PASSWORD = 'your_email_password'
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'carclubforgotpasswor@gmail.com'
+EMAIL_HOST_PASSWORD = 'eivg fiok imuk elkf'
+DEFAULT_FROM_EMAIL = 'carclubforgotpasswor@gmail.com'  # Default sender email address
 
 
 # Default primary key field type

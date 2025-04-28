@@ -15,8 +15,17 @@
         {% endfor %}
     </ul>
     {% endif %}
-
-    <h1 style="color: black;">Welcome</h1>
+    <div style="color: black;" class="card-header text-center">
+        <h1>Welcome, {{ user.username }}!</h1>
+    </div>
+    <div style="color: black;" class="card-body">
+        <p>We hope you enjoy your experience using our platform. Here are some things you can do:</p>
+        <ul>
+            <li><strong>Profile: </strong> Make sure to keep your profile updated!</li>
+            <li><strong>Garage:</strong> Add vehicles along with tiresets for your vehicle!</li>
+            <li><strong>Statistics: </strong> Search up results from any recent event, and make records for certain runs!</li>
+        </ul>
+    </div>
 </section>
 
 {% endblock %}
