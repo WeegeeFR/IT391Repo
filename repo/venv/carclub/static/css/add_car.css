@@ -1,0 +1,94 @@
+.add-car-section {
+    background: #fafafa;
+    min-height: calc(100vh - 88px);
+    max-height: 100vh;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    display: flex;
+    justify-content: center;
+}
+
+.car-form-header {
+    width: 100%;
+}
+
+.car-form p label {
+    display: flex;
+    font-weight: 100;
+    font-size: clamp(1.2rem, 8vw, 2rem);
+    margin-bottom: 5px;
+    color: black;
+}
+
+.car-form .form-select,
+.car-form .form-control {
+    width: 100%;
+    padding: clamp(1rem, 3vw, 1.8rem);
+    border-radius: 10px;
+    font-size: clamp(1.2rem, 8vw, 2rem);
+}
+
+.car-form .form-select:focus,
+.car-form .form-control:focus {
+    border: 1px solid var(--blue);
+}
+
+.tire-form h3 {
+    color: black;
+}
+
+.tire-form p:nth-of-type(5) select {}
+
+#id_manufacture_date_month,
+#id_manufacture_date_day,
+#id_manufacture_date_year {
+    margin-right: 20px;
+    appearance: none;
+    padding: clamp(1rem, 3vw, 1.8rem);
+    border: .1px solid black;
+    border-radius: 10px;
+    font-size: clamp(1.2rem, 8vw, 2rem);
+}
+
+
+
+
+
+
+.create-vehicle-container-btn {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 25px 0;
+}
+
+.create-vehicle-container-btn button {
+    width: min(550px, 90%);
+    padding: 12px 0 12px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: clamp(1.2rem, 8vw, 2.5rem);
+    background: linear-gradient(135deg, var(--blue), var(--darkblue));
+    color: var(--white-color);
+}
+
+
+
+
+
+/* .container {
+     display: flex;
+     justify-content: space-between;
+     gap: 20px;
+ }
+
+ .form-side {
+     width: 45%;
+ }
+
+ .hidden {
+     display: none;
+ }

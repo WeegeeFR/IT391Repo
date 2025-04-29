@@ -1,0 +1,451 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    border: none;
+    outline: none;
+
+}
+
+:root {
+    --black: black;
+    --white-color: #fff;
+    --blue: #007bff;
+    --darkblue: #0056b3;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    color: var(--white-color);
+    min-height: 100vh;
+}
+
+/* Navbar Section */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background: var(--white-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    border-bottom-style: solid;
+    border-radius: 0;
+    box-shadow: 0 4px 6px -3px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 3rem;
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+nav a {
+    color: black;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-left: 3.5rem;
+    transition: .3s;
+    text-decoration: none;
+}
+
+nav a.active {
+    color: var(--blue);
+}
+
+nav.active {
+    background-color: var(--white-color);
+}
+
+#menu-icon {
+    display: none;
+    font-size: 4rem;
+    color: black;
+}
+
+/* Home Section below */
+.home-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    background: var(--white-color);
+    align-content: center;
+}
+
+.home-section h1 {
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(50px, 8vw, 100px);
+}
+
+
+/* Login Section below */
+.login-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* min-height: calc(100vh - 80px); */
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--white-color);
+    min-height: auto;
+    width: min(350px, 90%);
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.login-form {
+    align-content: center;
+    padding: 25px;
+    width: 100%;
+}
+
+.login-form h2 {
+    color: black;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
+}
+
+.input-group-login {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group-login label {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+    font-size: clamp(.8rem, 8vw, 1.6rem);
+    margin-bottom: 5px;
+    color: black;
+}
+
+.input-group-login label i {
+    margin-right: 8px;
+    font-size: clamp(1.6rem, 8vw, 3rem);
+    color: black;
+}
+
+.login-form-control {
+    width: 100%;
+    padding: clamp(1rem, 3vw, 1.8rem);
+    background: whitesmoke;
+    border: solid whitesmoke;
+    border-radius: 8px !important;
+    font-size: clamp(.5rem, 8vw, 1.6rem);
+}
+
+.login-form-control:focus {
+    border-color: var(--blue);
+    border-width: .2rem;
+    outline: none;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--blue);
+    transition: color 0.3s ease-in-out;
+}
+
+.forgot-password a:hover {
+    color: var(--darkblue);
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.login-btn,
+.register-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--blue), var(--darkblue));
+    color: var(--white-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+    background: linear-gradient(135deg, var(--darkblue), rgb(38, 38, 112));
+}
+
+/* Register Link */
+.register-link {
+    margin: 15px 15px;
+}
+
+.register-link p {
+    font-size: 14px;
+    color: black;
+}
+
+.register-link a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.register-link a:hover {
+    color: var(--darkblue);
+    text-decoration: underline;
+}
+
+
+
+/* Register Section below */
+.register-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--white-color);
+    min-height: auto;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.21);
+    width: 350px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.register-form {
+    align-content: center;
+    padding: 25px;
+    width: 100%;
+}
+
+.register-form h2 {
+    color: black;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    padding: .5rem;
+    padding: 0;
+    margin: 15px 15px;
+}
+
+/* Profile Section Styling Below */
+
+.profile-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 9% 2rem;
+    align-content: center;
+}
+
+.profile-title {
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.profile-img-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    max-height: 400px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+}
+
+.profile-input {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.profile-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.profile-file-input {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.profile-form-label {
+    margin-bottom: .5px;
+    color: black;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.profile-btn {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: #fff;
+    transition: background 0.3s ease-in-out;
+}
+
+.profile-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Styles for very small devices*/
+@media (max-width: 575px) {
+    #menu-icon {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        text-align: center;
+        display: none;
+
+    }
+
+    nav.active {
+        display: block;
+    }
+
+    nav a {
+        display: block;
+        margin: 4rem 0;
+
+    }
+
+    .profile-img-container {
+        max-width: 200px;
+    }
+
+}
+
+
+/* Mobile Devices (up to 767px) */
+@media (max-width: 76.7rem) {
+    #menu-icon {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        text-align: center;
+        display: none;
+
+    }
+
+    nav.active {
+        display: block;
+    }
+
+    nav a {
+        display: block;
+        margin: 4rem 0;
+
+    }
+
+    /* Profile section */
+    .profile-img-container {
+        max-width: 300px;
+    }
+
+    .profile-title {
+        font-size: 2rem;
+    }
+
+    .profile-btn {
+        font-size: 1.1rem;
+    }
+
+}
+
+/* Tablets (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {}
+
+/* Desktops (1024px to 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {}
+
+/* Larger Desktops (1440px and above) */
+@media (min-width: 1440px) {}
+
+/* Further appereance for forms above */
+
+@media (max-height: 790px) {
+
+    .register-container {
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: none;
+    }
+
+
+}
