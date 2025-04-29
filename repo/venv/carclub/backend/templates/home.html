@@ -17,7 +17,11 @@
 <!-- Homepage section -->
 <section class="home-section">
     <div class="container">
-        <h1 class="text-center mb-4 display-3">Welcome, {{ user.username }}!</h1>
+        {% if user.username %}
+            <h1 class="text-center mb-4 display-3">Welcome, {{ user.username }}!</h1>
+        {% else %}
+            <h1 class="text-center mb-4 display-3">Welcome!</h1>
+        {% endif %}
         <p class="lead text-center mb-5">Explore what you can do:</p>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
