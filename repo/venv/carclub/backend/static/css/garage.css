@@ -1,13 +1,17 @@
 /* Style for the button at the top */
 .garage-section {
-    background: var(--white-color);
+    /* background: #f8f9fa;
     min-height: calc(100vh - 88px);
     position: absolute;
     width: 100%;
     height: 100%;
     padding: 10rem 9% 2rem;
     color: var(--white-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
 }
 
 .tire-btn {
@@ -31,16 +35,11 @@
     padding: 12px 0 12px 0;
     background: linear-gradient(135deg, var(--blue), var(--darkblue));
     color: var(--white-color);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: clamp(1.8rem, 8vw, 3rem);
     text-decoration: none;
-    transition: background 0.3s ease;
     width: min(550px, 90%);
-}
-
-.add-car-link:hover {
-    border: 1.8px solid var(--white-color);
 }
 
 .empty-car-h1 {
@@ -53,19 +52,77 @@
 
 /* Cards for cars in Garage */
 .custom-card {
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    transition: transform 0.27s ease-in-out;
 }
 
-.custom-card img {
+.custom-card:hover {
+    transform: scale(1.07);
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.car-img {
+    height: 20rem;
     object-fit: cover;
 }
 
 .custom-card .card-body {
-    background: rgb(233, 233, 233);
+    background-color: #f9f9f9;
 }
 
 .custom-card .card-title {
     font-weight: 500;
+    font-size: clamp(1.2rem, 5vw, 1.75rem);
     color: black;
+}
+
+/* Show Car Section */
+
+.showcar-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
+}
+
+.edit-car-title {
+    color: #343a40;
+}
+
+.edit-car-text {
+    font-size: 0.95rem;
+}
+
+.car-image {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.no-image {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+}
+
+.edit-car-label {
+    font-size: 1rem;
+    color: #495057;
+}
+
+.edit-car-control,
+.edit-car-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 0.75rem;
+    font-size: 1.4rem;
+}
+
+.edit-car-control:focus,
+.edit-car-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }

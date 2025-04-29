@@ -4,30 +4,41 @@
     <div class="register-container">
         <form method="post" class="register-form">
             {% csrf_token %}
+            {% if messages %}
+            <div class="position-fixed top-50 start-50 translate-middle w-75" style="z-index: 1055;">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show fs-5 py-4 px-5 shadow-lg"
+                    role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             <h2>Register</h2>
 
-            <div class="input-group-login">
+            <div class="input-group-register">
                 <label for="{{ form.username.id_for_label }}">
                     <i class='bx bx-user'></i> Username
                 </label>
                 {{ form.username }}
             </div>
 
-            <div class="input-group-login">
+            <div class="input-group-register">
                 <label for="{{ form.email.id_for_label }}">
                     <i class='bx bx-envelope'></i> Email
                 </label>
                 {{ form.email }}
             </div>
 
-            <div class="input-group-login">
+            <div class="input-group-register">
                 <label for="{{ form.password1.id_for_label }}">
                     <i class='bx bx-lock'></i> Password
                 </label>
                 {{ form.password1 }}
             </div>
 
-            <div class="input-group-login">
+            <div class="input-group-register">
                 <label for="{{ form.password2.id_for_label }}">
                     <i class='bx bx-lock-alt'></i> Confirm Password
                 </label>

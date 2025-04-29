@@ -1,19 +1,17 @@
 {% extends 'base.html' %} {% block tittle %}Home Page{% endblock %}
 {% block content %}
-<section class="garage-section">
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+{% if messages %}
+<div class="position-fixed top-50 start-50 translate-middle w-75" style="z-index: 1055;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show fs-5 py-4 px-5 shadow-lg" role="alert">
+        <span>{{ message }}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<section class="garage-section">
 
     {% for car in cars %}
     {% empty %}
@@ -36,13 +34,22 @@
         <div class="row justify-content-center"> <!-- Centers items if fewer cars exist -->
             {% for car in cars %}
             <div class="col-lg-4 col-md-6 col-sm-8 col-10 mb-4"> <!-- Auto adjusts for different screens -->
-                <div class="card custom-card h-100"> <!-- Ensures uniform card height -->
-                    <img src="{{ car.picture }}" class="card-img-top" alt="{{ car.name }}">
+                <div class="card custom-card"> <!-- Ensures uniform card height -->
+                    {% if car.picture %}
+                    <a href="{% url 'show_car' car.car_id %}">
+                        <img src="{{ car.picture.url }}" class="card-img-top car-img" alt="{{ car.owner_name }}">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'show_car' car.car_id %}">
+                        <img src="{{ MEDIA_URL }}default_pictures/no_image.jpg" class="card-img-top car-img"
+                            alt="No Image Available">
+                    </a>
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Car Name:</h5>
-                        {{ car.name }}
-                        <p class="card-text">Co-driven:</p>
-                        {{ car.co_driven }}
+                        <h5 class="card-title">Owner Name: {{ car.owner_name }}</h5>
+
+                        <h5 class="card-title">Co-driven: {{ car.codriven }}</h5>
+
                     </div>
                 </div>
             </div>

@@ -7,16 +7,15 @@
             {% csrf_token %}
             <!--Display message if there is any-->
             {% if messages %}
-            <ul class="messages">
+            <div class="position-fixed top-50 start-50 translate-middle w-75" style="z-index: 1055;">
                 {% for message in messages %}
-                <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </li>
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show fs-5 py-4 px-5 shadow-lg"
+                    role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
             {% endif %}
             <h2>Login</h2>
             <div class="input-group-login">
@@ -33,7 +32,7 @@
 
             <!-- Forgot Password Link -->
             <div class="forgot-password">
-                <a href="#">Forgot Password?</a>
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
             </div>
 
             <button class="login-btn" type="submit">Login</button>

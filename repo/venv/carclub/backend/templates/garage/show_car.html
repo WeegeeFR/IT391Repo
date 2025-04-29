@@ -1,0 +1,146 @@
+<!-- templates/cars/car_detail.html -->
+{% extends 'base.html' %} {% block tittle %} Edit {{ car.brand }} {% endblock %}
+{% block content %}
+{% if messages %}
+<div class="position-fixed top-50 start-50 translate-middle w-75" style="z-index: 1055;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show fs-5 py-4 px-5 shadow-lg" role="alert">
+        <span>{{ message }}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<section class="showcar-section">
+    <div class="container">
+        <div class="d-flex justify-content-center mb-4">
+            <a href="{% url 'garage' %}" class="btn btn-outline-secondary btn-lg px-4">
+                <i class="bi bi-arrow-left me-2"></i> Back to Garage
+            </a>
+        </div>
+
+        <div class="row align-items-center mb-5 bg-white shadow rounded p-4">
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                {% if car.picture %}
+                <img src="{{ car.picture.url }}" alt="Car Picture" class="img-fluid rounded shadow-sm car-image">
+                {% else %}
+                <div class="bg-secondary text-white p-5 rounded text-center no-image">
+                    <i class="bi bi-image-slash mb-2" style="font-size: 2em;"></i>
+                    <div>No image available</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h2 class="mb-2 fw-bold text-primary">Editing: {{ car.brand }}</h2>
+                <p class="lead text-muted">Update the car details and manage its tires below.</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h5 class="card-title edit-car-title mb-3 fw-semibold">Car Details</h5>
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="{{ form.owner_name.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Owner
+                                Name</label>
+                            {{ form.owner_name }}
+                            {% if form.owner_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.owner_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.brand.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Make</label>
+                            {{ form.brand }}
+                            {% if form.brand.errors %}
+                            <div class="text-danger small mt-1">{{ form.brand.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.codriven.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Co-Driven</label>
+                            {{ form.codriven }}
+                            {% if form.codriven.errors %}
+                            <div class="text-danger small mt-1">{{ form.codriven.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.favorite_car.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Favorite
+                                Car</label>
+                            {{ form.favorite_car }}
+                            {% if form.favorite_car.errors %}
+                            <div class="text-danger small mt-1">{{ form.favorite_car.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label for="{{ form.picture.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Car
+                                Picture</label>
+                            {{ form.picture }}
+                            {% if form.picture.errors %}
+                            <div class="text-danger small mt-1">{{ form.picture.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label for="{{ form.free_form_text.id_for_label }}"
+                                class="form-label edit-car-label fw-semibold">Notes</label>
+                            {{ form.free_form_text }}
+                            {% if form.free_form_text.errors %}
+                            <div class="text-danger small mt-1">{{ form.free_form_text.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-save me-2"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-secondary">Tire Sets</h4>
+                <a href="{% url 'add_tires' car.car_id %}" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-plus-circle me-2"></i> Add Tire Set
+                </a>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mb-1">
+                {% for tireset in tiresets %}
+                <div class="col mb-lg-3 mb-md-3 mb-sm-3">
+                    <a href="{% url 'edit_tireset' tireset.tireset_id %}" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm border-0 rounded">
+                            <div class="card-body">
+                                <h6 class="card-title fw-semibold mb-2">Tire Set Details</h6>
+                                <p class="card-text edit-car-text mb-1"><strong class="text-muted">Date Driven:</strong>
+                                    {{tireset.date_driven }}</p>
+                                <p class="card-text edit-car-text mb-0"><strong class="text-muted">Weather:</strong>
+                                    {{tireset.weather_when_used }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-muted fst-italic">No tire sets have been added for this vehicle yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

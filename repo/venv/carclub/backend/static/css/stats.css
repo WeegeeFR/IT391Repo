@@ -1,0 +1,115 @@
+.stats-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
+}
+
+.stats-section-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.stats-title {
+    margin-bottom: 15px;
+    font-weight: 300;
+    color: black;
+    /* font-size: clamp(1.8rem, 4vw, 2.5rem); */
+    text-align: center;
+}
+
+.loading {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: black;
+}
+
+.stats-btn {
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 2.5rem;
+}
+
+/* add record section */
+
+.add-record-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background: #f8f9fa;
+    color: black;
+}
+
+.add-record-section h2 {
+    color: #28a745;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.add-record-section .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.3rem;
+}
+
+.add-record-section .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.add-record-section .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.add-record-section .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.add-record-section .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.add-record-section .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.add-record-section .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.add-record-section .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+/* show record section */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.show-record-btn {
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.4rem;
+}

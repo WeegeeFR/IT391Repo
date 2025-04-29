@@ -21,8 +21,8 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)#set this to false to deactivate an account, don't remove from database
 
     #logging fields
-    last_login = models.CharField(max_length=100)
-    date_joined = models.CharField(max_length=100)
+    last_login = models.DateTimeField(null=True)
+    date_joined = models.DateTimeField(null=True)
 
     #extra user fields
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
@@ -50,44 +50,69 @@ class User(AbstractUser):
 #Car model
 class Car(models.Model):
     #basic identifier info
-    car_id = models.IntegerField(primary_key=True)
+    car_id = models.AutoField(primary_key=True)
+    #this field is badly named, basically just there for foreign key stuff
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    
     #car info
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    codriven = models.BooleanField(null=True) #Allows true false and none
-    name = models.CharField(max_length=100)
-    brand = models.CharField(max_length=100)
+    owner_name = models.CharField(max_length=100, null=True, blank=True)
+    codriven = models.BooleanField(default=False, null=True, blank=True)
+    brand = models.CharField(max_length=100, null=True)
     picture = models.ImageField(upload_to='car_pictures/', null=True, blank=True)
-    #Tire Id fields for the car
-    left_front_tire = models.IntegerField(null=True)
-    left_back_tire = models.IntegerField(null=True)
-    right_front_tire = models.IntegerField(null=True)
-    right_back_tire = models.IntegerField(null=True)
-
     #extra fields for functionality
-    favorite_car = models.BooleanField(default=False)
+    favorite_car = models.BooleanField(default=False, blank=True)
 
-    free_form_text = models.CharField(max_length=500)
+    free_form_text = models.CharField(max_length=500, null=True)
 
     #to string function
     def __str__(self):
-        return self.name
+        return self.owner_name
+
+#Tireset model to hold tires
+class Tireset(models.Model):
+    #primary key
+    tireset_id = models.AutoField(primary_key=True)
+    #foreign key to attach tires to the vehicle
+    tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE)
+    #extra info that is nice to have on the tires
+    date_driven =  models.DateField(null=True)
+    highway_miles = models.IntegerField(null=True)
+    weather_when_used = models.CharField(max_length=100, null=True, blank=True)
 
 #tire model for database
 class Tire(models.Model):
     #identifier info
-    tire_id = models.IntegerField(primary_key=True)
-    #cascade to handle if car is deleted, tires will also be deleted
-    tire_vehicle = models.ForeignKey(Car, on_delete=models.CASCADE, null=True)
-    date_driven =  models.DateField(null=True)
-    tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
-
+    tire_id = models.AutoField(primary_key=True)
+    #cascade to handle if tireset is deleted, tires will also be deleted
+    tireset = models.ForeignKey(Tireset, on_delete=models.CASCADE, related_name='tires')
     #information about tire
+    tire_picture = models.ImageField(upload_to='tire_pictures/', null=True, blank=True)
     tire_brand = models.CharField(max_length=100, null=True)
     tire_pressure = models.FloatField(null=True)
     tread_wear = models.CharField(max_length=255, null=True)
-    highway_miles = models.IntegerField(null=True)
 
     #manufacturer info
-    manufacturer_link = models.CharField(max_length=500, null=True)
+    manufacturer_link = models.CharField(max_length=500, null=True, blank=True)
     manufacture_date = models.DateField(null=True)
-    
+
+#Record model to hold records
+class Record(models.Model):
+    #choices for record
+    RECORD_TYPE_CHOICES = [
+        ('Raw', 'Raw'),
+        ('Pax', 'Pax'),
+        ('Final', 'Final'),
+    ]
+    #primary key
+    record_id = models.AutoField(primary_key=True)
+    #foreign key to find it via owner
+    record_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    #record info
+    record_name = models.CharField(max_length=255)
+    record_type = models.CharField(max_length=255, choices=RECORD_TYPE_CHOICES, null=True)
+    record_date = models.DateField(null=True, blank=True)
+    #link to the run
+    video_link = models.CharField(max_length=100, null=True, blank=True)
+    #tostring
+    def __str__(self):
+        return f"{self.record_type} - {self.record_date}"

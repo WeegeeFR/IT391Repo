@@ -26,7 +26,28 @@ $(document).ready(function () {
     // This is for auto-dismissing Messages
     setTimeout(function () {
         $(".alert").fadeOut("slow");
-    }, 5000); // 5 seconds
+    }, 2000); // 5 seconds
+
+
+    // no longer needed!!!
+    // This is for the buttons on the stats page
+    // $(".stats-btn").click(function () {
+    //     $(".stats-btn").hide();
+    //     $(".loading").show();
+    // });
+
+
+    // $('.tire-form').hide(); // Initially hide all tire forms
+
+    // $('.tire-form-button').on('click', function () {
+    //     $('.tire-form').hide();
+    //     $('.tire-form-button').removeClass('btn-primary').addClass('btn-outline-primary');
+
+    //     var formNumber = $(this).data('form-number');
+    //     $('#form' + formNumber).fadeIn(200);
+    //     $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+    // });
+
 
 
 
