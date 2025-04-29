@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 #base url to results page
 results_url = "https://ccsportscarclub.org/autocross/schedule/pastresults/2023-autocross-results/"
@@ -50,7 +51,7 @@ def scrape_season_events():
     #return scraped data, key being the name and date of event as a string for dropdown, value being the links 
     return scraped_data
 
-def get_raw_pax_records(url, name, car_make, setting):
+def get_records(url, name, car_make, setting):
     scraped_data = []
     response = requests.get(url)
     if response.status_code != 200:
@@ -60,8 +61,11 @@ def get_raw_pax_records(url, name, car_make, setting):
 
      #Find all the <tbody> tag
     t_tags = soup.find_all('tbody')
-    #get the one we need(2nd)
+    #if pax or raw, we need the 2nd table
     table = t_tags[1]
+    #if final, we need the 3rd table
+    if setting == "Final":
+        table = t_tags[2]
     #before doing anything, check if the name or car_make provided is in it
     found_valid_record = False
     fixed_name = name.strip().lower()
@@ -89,7 +93,16 @@ def get_raw_pax_records(url, name, car_make, setting):
             if in_table:
                 output_array = []
                 for td in tr.find_all('td'):
-                    output_array.append(td.get_text(strip=True))
+                    #if pax or raw, append to table
+                    current_text = td.get_text(strip=True)
+                    if setting == "Pax" or setting == "Raw":
+                        output_array.append(td.get_text(strip=True))
+                    #if final, check if there's any runs that weren't done, set it to N/A for convenience
+                    elif setting == "Final":
+                        if len(current_text) > 0:
+                            output_array.append(current_text)
+                        else:
+                            output_array.append('N/A')
                 scraped_data.append(output_array)
     return scraped_data
 
@@ -130,3 +143,75 @@ def get_links_from_string(returned_string):
         final_dictionary[key] = key_array
     #return dictionary
     return final_dictionary
+
+def get_weather(given_date):
+    url = "https://api.open-meteo.com/v1/forecast"
+    #latitude and longitude for rantoul
+    lat = 40.294190
+    lon = -88.148880
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": ["weathercode"],
+        "start_date": given_date,
+        "end_date": given_date,
+        "timezone": "auto"
+    }
+
+    response = requests.get(url, params=params)
+    data = response.json()
+
+    if "hourly" not in data:
+        print("No weather data found.")
+        return
+
+    #Get weather code and timestamp data
+    weather_codes = data["hourly"]["weathercode"]
+    times = data["hourly"]["time"]
+
+    #We'll get the most recent available hour starting from 10 oclock in the morning
+    current_hour_index = 10
+    for i in range(10, len(times)):
+        if times[i]:
+            current_hour_index = i
+            break
+    weather_code = weather_codes[current_hour_index]
+
+    #Translate code to description
+    weather_description = get_weather_from_code(weather_code)
+    return weather_description
+
+#Decode the weather code to human-readable condition(certainly didnt chatgpt this cause lazy)
+def get_weather_from_code(weather_code):
+    weather_conditions = {
+        0: 'Clear sky',
+        1: 'Mainly clear',
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Fog',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Drizzle',
+        55: 'Heavy drizzle',
+        56: 'Light freezing drizzle',
+        57: 'Freezing drizzle',
+        61: 'Light rain',
+        63: 'Rain',
+        65: 'Heavy rain',
+        66: 'Light freezing rain',
+        67: 'Freezing rain',
+        71: 'Light snow fall',
+        73: 'Snow fall',
+        75: 'Heavy snow fall',
+        77: 'Snow grains',
+        80: 'Light rain showers',
+        81: 'Rain showers',
+        82: 'Heavy rain showers',
+        85: 'Light snow showers',
+        86: 'Heavy snow showers',
+        95: 'Thunderstorms',
+        96: 'Thunderstorms with light hail',
+        99: 'Thunderstorms with heavy hail'
+    }
+    
+    return weather_conditions.get(weather_code, "Unknown weather")

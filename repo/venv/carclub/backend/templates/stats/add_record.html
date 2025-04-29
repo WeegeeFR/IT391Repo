@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block tittle %}Add Record{% endblock %}
+{% block content %}
+<section class="add-record-section d-flex align-items-center justify-content-center vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="bg-light p-4 rounded shadow-lg fade-up">
+                    <h2 class="mb-4 text-center">Create New Record</h2>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label for="{{ form.record_name.id_for_label }}" class="form-label fs-5">Record
+                                Name:</label>
+                            {{ form.record_name }}
+                            {% if form.record_name.errors %}
+                            {% for error in form.record_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.record_type.id_for_label }}" class="form-label fs-5">Record
+                                Type:</label>
+                            {{ form.record_type }}
+                            {% if form.record_type.errors %}
+                            {% for error in form.record_type.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.record_date.id_for_label }}" class="form-label fs-5">Record
+                                Date:</label>
+                            {{ form.record_date }}
+                            {% if form.record_date.errors %}
+                            {% for error in form.record_date.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.video_link.id_for_label }}" class="form-label fs-5">Video Link:</label>
+                            {{ form.video_link }}
+                            {% if form.video_link.errors %}
+                            {% for error in form.video_link.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 fs-5">Save Record</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
